@@ -1,5 +1,3 @@
-# Ignore Node Modules
 node_modules
 
-# Ignore Enviromental Variables
 .env

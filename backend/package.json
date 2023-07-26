@@ -1,8 +1,9 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "An issue-tracker application using JS, Express.js for managing and tracking project issues and tasks.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
