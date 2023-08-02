@@ -1,9 +1,9 @@
 import "./App.css";
-
+import ReactRouter from "./router";
 function App() {
   return (
     <div>
-      <h1>Issue Tracker</h1>
+      <ReactRouter />
     </div>
   );
 }
