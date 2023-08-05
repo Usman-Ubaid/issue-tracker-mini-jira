@@ -1,0 +1,49 @@
+@import "./styles/global.scss";
+
+// Layout
+
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+// Sidebar
+
+.sidebar {
+  background-color: $dark-blue;
+  padding: 0;
+  margin: 0;
+  grid-column: 1 / 2;
+  height: 100vh;
+}
+
+.sidebar h1 {
+  color: white;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.sidebar ul {
+  margin: 30px 0 30px 25px;
+}
+
+.sidebar ul li {
+  margin: 20px 0 20px 0;
+  padding: 10px 0 10px 5px;
+}
+
+.default-tab {
+  color: white;
+}
+
+.active-tab {
+  color: $dark-blue;
+  background-color: white;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.primary-navbar {
+  grid-column: 2 / 3;
+}
