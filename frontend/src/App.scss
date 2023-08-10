@@ -1,0 +1,83 @@
+@import "./styles/global.scss";
+
+// Layout
+
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+// Sidebar
+
+.sidebar {
+  background-color: $dark-blue;
+  padding: 0;
+  margin: 0;
+  grid-column: 1 / 2;
+  height: 100vh;
+
+  h1 {
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+  }
+
+  ul {
+    margin: 30px 0 30px 25px;
+
+    li {
+      margin: 20px 0 20px 0;
+      padding: 10px 0 10px 5px;
+    }
+
+    .default-tab {
+      color: white;
+    }
+  }
+
+  .active-tab {
+    color: $dark-blue;
+    background-color: white;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .primary-navbar {
+    grid-column: 2 / 3;
+  }
+}
+
+// ADD ISSUE FORM
+
+.add-issue-form {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+
+  h2 {
+    font-size: 40px;
+  }
+
+  input {
+    margin-top: 5rem;
+    padding: 10px 15px;
+    display: block;
+    width: 300px;
+    font-size: 1.2rem;
+  }
+
+  select {
+    display: block;
+    padding: 10px 15px;
+    width: 300px;
+    font-size: 1.2rem;
+  }
+
+  .button {
+    margin-top: 0;
+  }
+}

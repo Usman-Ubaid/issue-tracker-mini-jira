@@ -1,3 +1,12 @@
+
+import "./App.scss";
+import ReactRouter from "./router";
+function App() {
+  return (
+    <>
+      <ReactRouter />
+    </>
+
 import "./App.css";
 
 function App() {
@@ -5,6 +14,7 @@ function App() {
     <div>
       <h1>Issue Tracker</h1>
     </div>
+
   );
 }
 
