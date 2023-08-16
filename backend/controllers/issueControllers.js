@@ -24,9 +24,15 @@ const addIssue = (req, res) => {
 
 const deleteIssue = (req, res) => {
   const id = parseInt(req.params.id);
-  issues = issues.filter((issue) => {
+  const filterIssues = issues.filter((issue) => {
     return issue.issueId !== id;
   });
+
+  if (filterIssues.length === issues.length) {
+    return res.json({ error: "ID does not exist" });
+  }
+
+  issues = filterIssues;
 
   res.json({ message: "success", data: issues });
 };
