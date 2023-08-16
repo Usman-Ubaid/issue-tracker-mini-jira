@@ -22,4 +22,13 @@ const addIssue = (req, res) => {
   return res.status(201).json({ success: true, data: issues });
 };
 
-export { addIssue };
+const deleteIssue = (req, res) => {
+  const id = parseInt(req.params.id);
+  issues = issues.filter((issue) => {
+    return issue.issueId !== id;
+  });
+
+  res.json({ message: "success", data: issues });
+};
+
+export { addIssue, deleteIssue };
