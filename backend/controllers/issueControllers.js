@@ -1,9 +1,15 @@
 let issues = [];
 
 const getIssues = (req, res) => {
-  return res
-    .status(200)
-    .json({ message: "Issues fetched successfully ", data: issues });
+  try {
+    return res
+      .status(200)
+      .json({ message: "Data fetched successfully ", data: issues });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error fetching data", error: error.message });
+  }
 };
 
 const addIssue = (req, res) => {
