@@ -1,5 +1,11 @@
 let issues = [];
 
+const getIssues = (req, res) => {
+  return res
+    .status(200)
+    .json({ message: "Issues fetched successfully ", data: issues });
+};
+
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
@@ -22,4 +28,4 @@ const addIssue = (req, res) => {
   return res.status(201).json({ success: true, data: issues });
 };
 
-export { addIssue };
+export { addIssue, getIssues };
