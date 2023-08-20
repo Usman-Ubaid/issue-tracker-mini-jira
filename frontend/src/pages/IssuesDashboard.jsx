@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 
-const Dashboard = () => {
+const IssuesDashboard = () => {
   return <Layout></Layout>;
 };
 
-export default Dashboard;
+export default IssuesDashboard;

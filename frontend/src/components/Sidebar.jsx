@@ -3,7 +3,10 @@ import { NavLink, useLocation } from "react-router-dom";
 const Sidebar = () => {
   const location = useLocation();
 
-  const tabs = [{ id: 1, name: "Create Issue", path: "/addIssue" }];
+  const tabs = [
+    { id: 1, name: "All Issues", path: "/" },
+    { id: 2, name: "Create Issue", path: "/addIssue" },
+  ];
 
   return (
     <div className="sidebar">
@@ -16,8 +19,8 @@ const Sidebar = () => {
               location.pathname === tab.path ? "active-tab" : "default-tab"
             } `}
           >
-            <NavLink to="/addIssue" className="nav-link">
-              Create Issue
+            <NavLink to={tab.path} className="nav-link">
+              {tab.name}
             </NavLink>
           </li>
         ))}

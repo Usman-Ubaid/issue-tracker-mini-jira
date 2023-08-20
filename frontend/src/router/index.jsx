@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
+import IssuesDashboard from "../pages/IssuesDashboard";
 import AddIssue from "../pages/AddIssue";
 
 const ReactRouter = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<IssuesDashboard />} />
         <Route path="/addIssue" element={<AddIssue />} />
       </Routes>
     </>
