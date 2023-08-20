@@ -1,5 +1,17 @@
 let issues = [];
 
+const getIssues = (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json({ message: "Data fetched successfully ", data: issues });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error fetching data", error: error.message });
+  }
+};
+
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
@@ -22,6 +34,9 @@ const addIssue = (req, res) => {
   return res.status(201).json({ success: true, data: issues });
 };
 
+
+export { addIssue, getIssues };
+
 const deleteIssue = (req, res) => {
   const id = parseInt(req.params.id);
   const filterIssues = issues.filter((issue) => {
@@ -38,3 +53,4 @@ const deleteIssue = (req, res) => {
 };
 
 export { addIssue, deleteIssue };
+

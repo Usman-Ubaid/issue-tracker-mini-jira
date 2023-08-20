@@ -1,8 +1,10 @@
 import express from "express";
-import { addIssue, deleteIssue } from "../controllers/issueControllers.js";
+
+import { addIssue, getIssues, deleteIssue } from "../controllers/issueControllers.js";
 
 const router = express.Router();
 
+router.get("/issues", getIssues);
 router.post("/issues", addIssue);
 router.delete("/issues/:id", deleteIssue);
 
