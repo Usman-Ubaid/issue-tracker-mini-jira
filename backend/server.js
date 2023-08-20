@@ -1,5 +1,5 @@
 import express from "express";
-import { Sequelize } from "sequelize";
+import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import issueRoutes from "./routes/issueRoutes.js";
@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 
 // middleware configurations
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

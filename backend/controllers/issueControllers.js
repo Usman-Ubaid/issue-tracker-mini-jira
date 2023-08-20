@@ -34,4 +34,23 @@ const addIssue = (req, res) => {
   return res.status(201).json({ success: true, data: issues });
 };
 
+
 export { addIssue, getIssues };
+
+const deleteIssue = (req, res) => {
+  const id = parseInt(req.params.id);
+  const filterIssues = issues.filter((issue) => {
+    return issue.issueId !== id;
+  });
+
+  if (filterIssues.length === issues.length) {
+    return res.json({ error: "ID does not exist" });
+  }
+
+  issues = filterIssues;
+
+  res.json({ message: "success", data: issues });
+};
+
+export { addIssue, deleteIssue };
+
