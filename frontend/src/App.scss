@@ -50,7 +50,8 @@
 
 // ADD ISSUE FORM
 
-.add-issue-form {
+.add-issue-form,
+.issues-dashboard {
   margin-top: 32px;
   display: flex;
   flex-direction: column;
@@ -79,5 +80,36 @@
 
   .button {
     margin-top: 0;
+  }
+}
+
+// Issues-Dashboard
+
+.issues-dashboard {
+  table {
+    margin-top: 33px;
+    width: 800px;
+
+    thead {
+      width: 100%;
+      background-color: $dark-blue;
+      color: #fff;
+      margin: 30px;
+
+      th {
+        padding: 15px 0;
+      }
+    }
+
+    tr {
+      text-align: center;
+    }
+
+    tbody {
+      td {
+        padding: 15px 0;
+        border-bottom: 1px solid #4d4d4d;
+      }
+    }
   }
 }

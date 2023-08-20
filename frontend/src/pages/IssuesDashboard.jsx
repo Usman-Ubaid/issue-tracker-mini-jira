@@ -1,7 +1,9 @@
 import Layout from "../components/Layout";
 
 const IssuesDashboard = () => {
-  const tableHeadings = [{ id: "Id", title: "Title", type: "Type" }];
+  const tableHeadings = [
+    { id: "Issue Id", title: "Issue Title", type: "Issue Type" },
+  ];
 
   const issues = [
     { id: 1, issueTitle: "Develop UI", issueType: "Epic" },
@@ -12,11 +14,10 @@ const IssuesDashboard = () => {
     <Layout>
       <div className="issues-dashboard">
         <h2>Issues Dashboard</h2>
-        <h3>View All Issues</h3>
         <table>
           <thead>
             {tableHeadings.map((heading) => (
-              <tr>
+              <tr key={heading.id}>
                 <th>{heading.id}</th>
                 <th>{heading.title}</th>
                 <th>{heading.type}</th>
