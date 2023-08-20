@@ -1,13 +1,29 @@
 import { useForm } from "react-hook-form";
+import fetch from "node-fetch";
 import Layout from "../components/Layout";
 
 const AddIssue = () => {
   const { register, handleSubmit } = useForm();
+
+  const postData = async (formData) => {
+    await fetch("http://localhost:5000/api/issues", {
+      method: "post",
+      body: JSON.stringify({ title: formData.title, type: formData.type }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => console.log("Your Issue has been successfully added."))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Layout>
       <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
+        onSubmit={handleSubmit(async (data) => {
+          await postData(data);
         })}
         className="add-issue-form"
       >
