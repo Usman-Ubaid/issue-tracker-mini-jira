@@ -1,15 +1,32 @@
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 
 const IssuesDashboard = () => {
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/issues", {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const jsonData = await response.json();
+      setData(jsonData.data);
+    } catch (error) {
+      console.log("Error fetching data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const tableHeadings = [
     { id: "Issue Id", title: "Issue Title", type: "Issue Type" },
   ];
 
-  const issues = [
-    { id: 1, issueTitle: "Develop UI", issueType: "Epic" },
-    { id: 2, issueTitle: "Develop API", issueType: "Story" },
-    { id: 3, issueTitle: "Integrate API", issueType: "Task" },
-  ];
   return (
     <Layout>
       <div className="issues-dashboard">
@@ -25,11 +42,11 @@ const IssuesDashboard = () => {
             ))}
           </thead>
           <tbody>
-            {issues.map((issue) => (
-              <tr key={issue.id}>
-                <td>{issue.id}</td>
-                <td>{issue.issueTitle}</td>
-                <td>{issue.issueType}</td>
+            {data.map((item) => (
+              <tr key={item.issueId}>
+                <td>{item.issueId}</td>
+                <td>{item.title}</td>
+                <td>{item.type}</td>
               </tr>
             ))}
           </tbody>
