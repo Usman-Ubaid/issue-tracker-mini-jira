@@ -42,15 +42,18 @@ const IssuesDashboard = () => {
             ))}
           </thead>
           <tbody>
-            {data.map((item) => (
-              <tr key={item.issueId}>
-                <td>{item.issueId}</td>
-                <td>{item.title}</td>
-                <td>{item.type}</td>
-              </tr>
-            ))}
+            {data &&
+              data.length > 0 &&
+              data.map((item) => (
+                <tr key={item.issueId}>
+                  <td>{item.issueId}</td>
+                  <td>{item.title}</td>
+                  <td>{item.type}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
+        {(!data || data.length === 0) && <p>No data to show</p>}
       </div>
     </Layout>
   );
