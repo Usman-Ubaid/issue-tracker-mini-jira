@@ -27,6 +27,7 @@ const addIssue = (req, res) => {
     issueId: Math.ceil(Math.random() * 100),
     title,
     type,
+    state: "ToDo",
   };
 
   issues.push(issue);
