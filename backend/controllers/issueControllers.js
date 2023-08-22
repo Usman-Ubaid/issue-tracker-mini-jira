@@ -12,6 +12,27 @@ const getIssues = (req, res) => {
   }
 };
 
+const updateIssue = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, type, state } = req.body;
+
+  const issueToUpdate = issues.find((issue) => issue.issueId === id);
+
+  try {
+    issueToUpdate.title = title || issueToUpdate.title;
+    issueToUpdate.type = type || issueToUpdate.type;
+    issueToUpdate.state = state || issueToUpdate.state;
+  } catch (error) {
+    if (!issueToUpdate) {
+      return res.status(404).json({ error: "Issue not found" });
+    } else {
+      return res.json({ error: "Error updating the issue" });
+    }
+  }
+
+  res.json({ issueToUpdate });
+};
+
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
@@ -27,6 +48,7 @@ const addIssue = (req, res) => {
     issueId: Math.ceil(Math.random() * 100),
     title,
     type,
+    state: "ToDo",
   };
 
   issues.push(issue);
@@ -49,4 +71,4 @@ const deleteIssue = (req, res) => {
   res.json({ message: "success", data: issues });
 };
 
-export { getIssues, addIssue, deleteIssue };
+export { getIssues, addIssue, deleteIssue, updateIssue };
