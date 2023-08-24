@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import ModalInFunctionalComponent from "../components/Modal/Modal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
+
+  const getIssueId = (issueId) => {
+    console.log(issueId);
+  };
 
   const fetchData = async () => {
     try {
@@ -57,11 +62,7 @@ const IssuesDashboard = () => {
                   <td>{item.type}</td>
                   <td>{item.state}</td>
                   <td>
-                    <button
-                      onClick={() => {
-                        console.log(item.issueId);
-                      }}
-                    >
+                    <button onClick={() => getIssueId(item.issueId)}>
                       Edit
                     </button>
                   </td>
@@ -70,6 +71,9 @@ const IssuesDashboard = () => {
           </tbody>
         </table>
         {(!data || data.length === 0) && <p>No data to show</p>}
+      </div>
+      <div>
+        <ModalInFunctionalComponent />
       </div>
     </Layout>
   );
