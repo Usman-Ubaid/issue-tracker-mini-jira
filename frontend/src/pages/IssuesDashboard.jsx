@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
+import Modal from "react-modal";
 import Layout from "../components/Layout";
-import ModalInFunctionalComponent from "../components/Modal/Modal";
+import EditModal from "../components/Modal/EditModal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
+  // const [isOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  Modal.setAppElement("#root");
 
   const getIssueId = (issueId) => {
+    setModalIsOpen(true);
     console.log(issueId);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   const fetchData = async () => {
@@ -70,10 +80,13 @@ const IssuesDashboard = () => {
               ))}
           </tbody>
         </table>
+
+        <div>
+          {modalIsOpen && (
+            <EditModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
+          )}
+        </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
-      </div>
-      <div>
-        <ModalInFunctionalComponent />
       </div>
     </Layout>
   );
