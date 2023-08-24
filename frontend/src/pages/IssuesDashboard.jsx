@@ -24,7 +24,12 @@ const IssuesDashboard = () => {
   }, []);
 
   const tableHeadings = [
-    { id: "Issue Id", title: "Issue Title", type: "Issue Type" },
+    {
+      id: "Issue Id",
+      title: "Issue Title",
+      type: "Issue Type",
+      status: "Status",
+    },
   ];
 
   return (
@@ -38,6 +43,7 @@ const IssuesDashboard = () => {
                 <th>{heading.id}</th>
                 <th>{heading.title}</th>
                 <th>{heading.type}</th>
+                <th>{heading.status}</th>
               </tr>
             ))}
           </thead>
@@ -49,6 +55,16 @@ const IssuesDashboard = () => {
                   <td>{item.issueId}</td>
                   <td>{item.title}</td>
                   <td>{item.type}</td>
+                  <td>{item.state}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        console.log(item.issueId);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
