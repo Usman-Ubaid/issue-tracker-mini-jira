@@ -1,8 +1,3 @@
-
-import Layout from "../components/Layout";
-
-const IssuesDashboard = () => {
-
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 
@@ -28,11 +23,9 @@ const IssuesDashboard = () => {
     fetchData();
   }, []);
 
-
   const tableHeadings = [
     { id: "Issue Id", title: "Issue Title", type: "Issue Type" },
   ];
-
 
   return (
     <Layout>
@@ -49,7 +42,6 @@ const IssuesDashboard = () => {
             ))}
           </thead>
           <tbody>
-
             {data &&
               data.length > 0 &&
               data.map((item) => (
@@ -62,7 +54,6 @@ const IssuesDashboard = () => {
           </tbody>
         </table>
         {(!data || data.length === 0) && <p>No data to show</p>}
-
       </div>
     </Layout>
   );
