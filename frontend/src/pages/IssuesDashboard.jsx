@@ -1,22 +1,40 @@
 import { useEffect, useState } from "react";
-import Modal from "react-modal";
 import Layout from "../components/Layout";
 import EditModal from "../components/Modal/EditModal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
-  // const [isOpen, setIsOpen] = useState(false);
+  const [updateIssue, setIssueUpdate] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  Modal.setAppElement("#root");
-
-  const getIssueId = (issueId) => {
+  const getUpdatedIssue = (issue) => {
     setModalIsOpen(true);
-    console.log(issueId);
+
+    const filterIssue = data.find((item) => {
+      return item.issueId === issue.issueId;
+    });
+
+    setIssueUpdate(filterIssue);
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const postUpdatedIssue = async (issue) => {
+    try {
+      await fetch(`http://localhost:5000/api/issues/${issue.issueId}`, {
+        method: "put",
+        body: JSON.stringify(issue),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const updatedData = data.map((item) =>
+        item.issueId === issue.issueId ? issue : item
+      );
+
+      setData(updatedData);
+    } catch (error) {
+      console.log("Error updating issue", error);
+    }
   };
 
   const fetchData = async () => {
@@ -72,9 +90,7 @@ const IssuesDashboard = () => {
                   <td>{item.type}</td>
                   <td>{item.state}</td>
                   <td>
-                    <button onClick={() => getIssueId(item.issueId)}>
-                      Edit
-                    </button>
+                    <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
                 </tr>
               ))}
@@ -82,9 +98,12 @@ const IssuesDashboard = () => {
         </table>
 
         <div>
-          {modalIsOpen && (
-            <EditModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
-          )}
+          <EditModal
+            modalIsOpen={modalIsOpen}
+            updateIssue={updateIssue}
+            setModalIsOpen={setModalIsOpen}
+            postUpdatedIssue={postUpdatedIssue}
+          />
         </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
       </div>
