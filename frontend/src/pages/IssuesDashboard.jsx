@@ -17,6 +17,31 @@ const IssuesDashboard = () => {
     setIssueUpdate(filterIssue);
   };
 
+
+  const deleteIssue = async (issue) => {
+    const filterIssue = data.find((item) => {
+      return item.issueId === issue.issueId;
+    });
+
+    try {
+      await fetch(`http://localhost:5000/api/issues/${filterIssue.issueId}`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setData(
+        data.filter((item) => {
+          return item.issueId !== issue.issueId;
+        })
+      );
+    } catch (error) {
+      console.log("Error deleting issue", error);
+    }
+  };
+
+
   const postUpdatedIssue = async (issue) => {
     try {
       await fetch(`http://localhost:5000/api/issues/${issue.issueId}`, {
@@ -92,6 +117,12 @@ const IssuesDashboard = () => {
                   <td>
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
+
+
+                  <td>
+                    <button onClick={() => deleteIssue(item)}>Delete</button>
+                  </td>
+
                 </tr>
               ))}
           </tbody>
