@@ -1,8 +1,64 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import EditModal from "../components/Modal/EditModal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
+  const [updateIssue, setIssueUpdate] = useState();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const getUpdatedIssue = (issue) => {
+    setModalIsOpen(true);
+
+    const filterIssue = data.find((item) => {
+      return item.issueId === issue.issueId;
+    });
+
+    setIssueUpdate(filterIssue);
+  };
+
+  const deleteIssue = async (issue) => {
+    const filterIssue = data.find((item) => {
+      return item.issueId === issue.issueId;
+    });
+
+    try {
+      await fetch(`http://localhost:5000/api/issues/${filterIssue.issueId}`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setData(
+        data.filter((item) => {
+          return item.issueId !== issue.issueId;
+        })
+      );
+    } catch (error) {
+      console.log("Error deleting issue", error);
+    }
+  };
+
+  const postUpdatedIssue = async (issue) => {
+    try {
+      await fetch(`http://localhost:5000/api/issues/${issue.issueId}`, {
+        method: "put",
+        body: JSON.stringify(issue),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const updatedData = data.map((item) =>
+        item.issueId === issue.issueId ? issue : item
+      );
+
+      setData(updatedData);
+    } catch (error) {
+      console.log("Error updating issue", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -24,7 +80,12 @@ const IssuesDashboard = () => {
   }, []);
 
   const tableHeadings = [
-    { id: "Issue Id", title: "Issue Title", type: "Issue Type" },
+    {
+      id: "Issue Id",
+      title: "Issue Title",
+      type: "Issue Type",
+      status: "Status",
+    },
   ];
 
   return (
@@ -38,6 +99,7 @@ const IssuesDashboard = () => {
                 <th>{heading.id}</th>
                 <th>{heading.title}</th>
                 <th>{heading.type}</th>
+                <th>{heading.status}</th>
               </tr>
             ))}
           </thead>
@@ -49,10 +111,26 @@ const IssuesDashboard = () => {
                   <td>{item.issueId}</td>
                   <td>{item.title}</td>
                   <td>{item.type}</td>
+                  <td>{item.state}</td>
+                  <td>
+                    <button onClick={() => getUpdatedIssue(item)}>Edit</button>
+                  </td>
+                  <td>
+                    <button onClick={() => deleteIssue(item)}>Delete</button>
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
+
+        <div>
+          <EditModal
+            modalIsOpen={modalIsOpen}
+            updateIssue={updateIssue}
+            setModalIsOpen={setModalIsOpen}
+            postUpdatedIssue={postUpdatedIssue}
+          />
+        </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
       </div>
     </Layout>
