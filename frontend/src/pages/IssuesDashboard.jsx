@@ -17,6 +17,7 @@ const IssuesDashboard = () => {
     setIssueUpdate(filterIssue);
   };
 
+
   const deleteIssue = async (issue) => {
     const filterIssue = data.find((item) => {
       return item.issueId === issue.issueId;
@@ -39,6 +40,7 @@ const IssuesDashboard = () => {
       console.log("Error deleting issue", error);
     }
   };
+
 
   const postUpdatedIssue = async (issue) => {
     try {
@@ -115,9 +117,12 @@ const IssuesDashboard = () => {
                   <td>
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
+
+
                   <td>
                     <button onClick={() => deleteIssue(item)}>Delete</button>
                   </td>
+
                 </tr>
               ))}
           </tbody>
