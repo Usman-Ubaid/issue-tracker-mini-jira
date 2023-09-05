@@ -33,6 +33,44 @@ const updateIssue = (req, res) => {
   res.json({ issueToUpdate });
 };
 
+const updateChildIssue = (req, res) => {
+  const parentId = parseInt(req.params.id);
+  const childId = parseInt(req.body.childId);
+
+  const childIssue = issues.find((issue) => issue.issueId === childId);
+  const parentIssue = issues.find((issue) => issue.issueId === parentId);
+
+  if (!parentIssue || !childIssue) {
+    return res.status(404).json({ error: "Child or Parent issue not found" });
+  }
+
+  if (parentIssue.type !== "Epic" && parentIssue.type !== "Story") {
+    return res.status(400).json({ error: "Task cannot have children" });
+  }
+
+  if (parentIssue.type === childIssue.type) {
+    return res
+      .status(400)
+      .json({ error: "Same issue type cannot be each other's children" });
+  }
+
+  if (parentIssue.type === "Story" && childIssue.type === "Epic") {
+    return res.status(400).json({ error: "Epic cannot be a child of Story" });
+  }
+
+  if (!parentIssue.children) {
+    parentIssue.children = [];
+  }
+
+  parentIssue.children.push(childId);
+
+  issues = issues.filter((issue) => {
+    return issue.issueId !== childId;
+  });
+
+  return res.status(201).json({ success: true, data: parentIssue });
+};
+
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
@@ -49,6 +87,7 @@ const addIssue = (req, res) => {
     title,
     type,
     state: "ToDo",
+    children: type === "Epic" || type === "Story" ? [] : null,
   };
 
   issues.push(issue);
@@ -58,6 +97,7 @@ const addIssue = (req, res) => {
 
 const deleteIssue = (req, res) => {
   const id = parseInt(req.params.id);
+
   const filterIssues = issues.filter((issue) => {
     return issue.issueId !== id;
   });
@@ -71,4 +111,4 @@ const deleteIssue = (req, res) => {
   res.json({ message: "success", data: issues });
 };
 
-export { getIssues, addIssue, deleteIssue, updateIssue };
+export { getIssues, addIssue, deleteIssue, updateIssue, updateChildIssue };
