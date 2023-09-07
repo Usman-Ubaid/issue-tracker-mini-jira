@@ -1,3 +1,5 @@
+import { createIssue } from "./helpers/createIssue.js";
+
 let issues = [];
 
 const getIssues = (req, res) => {
@@ -36,25 +38,26 @@ const updateIssue = (req, res) => {
 const updateChildIssue = (req, res) => {
   const parentId = parseInt(req.params.id);
   const childId = parseInt(req.body.childId);
+  const { title, type } = req.body;
 
   const childIssue = issues.find((issue) => issue.issueId === childId);
   const parentIssue = issues.find((issue) => issue.issueId === parentId);
 
-  if (!parentIssue || !childIssue) {
-    return res.status(404).json({ error: "Child or Parent issue not found" });
+  if (!parentIssue || (!childIssue && !(title && type))) {
+    return res.status(400).json({ error: "Invalid request" });
   }
 
   if (parentIssue.type !== "Epic" && parentIssue.type !== "Story") {
     return res.status(400).json({ error: "Task cannot have children" });
   }
 
-  if (parentIssue.type === childIssue.type) {
+  if (parentIssue.type === childIssue?.type) {
     return res
       .status(400)
       .json({ error: "Same issue type cannot be each other's children" });
   }
 
-  if (parentIssue.type === "Story" && childIssue.type === "Epic") {
+  if (parentIssue.type === "Story" && childIssue?.type === "Epic") {
     return res.status(400).json({ error: "Epic cannot be a child of Story" });
   }
 
@@ -62,37 +65,27 @@ const updateChildIssue = (req, res) => {
     parentIssue.children = [];
   }
 
-  parentIssue.children.push(childId);
+  if (childIssue) {
+    parentIssue.children.push(childId);
+  } else if (title && type) {
+    const newChildIssue = createIssue(title, type);
+    parentIssue.children.push(newChildIssue.issueId);
+    issues.push(newChildIssue);
+  }
 
-  issues = issues.filter((issue) => {
-    return issue.issueId !== childId;
-  });
-
-  return res.status(201).json({ success: true, data: parentIssue });
+  return res.status(201).json({ message: "success", data: issues });
 };
 
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
-  if (!title) {
-    return res.status(400).json({ error: "Title is required" });
+  try {
+    const newIssue = createIssue(title, type);
+    issues.push(newIssue);
+    return res.status(201).json({ message: "success", data: newIssue });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
-
-  if (!type) {
-    return res.status(400).json({ error: "Type is requried" });
-  }
-
-  const issue = {
-    issueId: Math.ceil(Math.random() * 100),
-    title,
-    type,
-    state: "ToDo",
-    children: type === "Epic" || type === "Story" ? [] : null,
-  };
-
-  issues.push(issue);
-
-  return res.status(201).json({ success: true, data: issues });
 };
 
 const deleteIssue = (req, res) => {
