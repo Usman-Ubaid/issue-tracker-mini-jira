@@ -1,3 +1,5 @@
+import { createIssue } from "./helpers/createIssue.js";
+
 let issues = [];
 
 const getIssues = (req, res) => {
@@ -33,31 +35,62 @@ const updateIssue = (req, res) => {
   res.json({ issueToUpdate });
 };
 
+const updateChildIssue = (req, res) => {
+  const parentId = parseInt(req.params.id);
+  const childId = parseInt(req.body.childId);
+  const { title, type } = req.body;
+
+  const childIssue = issues.find((issue) => issue.issueId === childId);
+  const parentIssue = issues.find((issue) => issue.issueId === parentId);
+
+  if (!parentIssue || (!childIssue && !(title && type))) {
+    return res.status(400).json({ error: "Invalid request" });
+  }
+
+  if (parentIssue.type !== "Epic" && parentIssue.type !== "Story") {
+    return res.status(400).json({ error: "Task cannot have children" });
+  }
+
+  if (parentIssue.type === childIssue?.type) {
+    return res
+      .status(400)
+      .json({ error: "Same issue type cannot be each other's children" });
+  }
+
+  if (parentIssue.type === "Story" && childIssue?.type === "Epic") {
+    return res.status(400).json({ error: "Epic cannot be a child of Story" });
+  }
+
+  if (!parentIssue.children) {
+    parentIssue.children = [];
+  }
+
+  if (childIssue) {
+    parentIssue.children.push(childId);
+  } else if (title && type) {
+    const newChildIssue = createIssue(title, type);
+    parentIssue.children.push(newChildIssue.issueId);
+    issues.push(newChildIssue);
+  }
+
+  return res.status(201).json({ message: "success", data: issues });
+};
+
 const addIssue = (req, res) => {
   const { title, type } = req.body;
 
-  if (!title) {
-    return res.status(400).json({ error: "Title is required" });
+  try {
+    const newIssue = createIssue(title, type);
+    issues.push(newIssue);
+    return res.status(201).json({ message: "success", data: newIssue });
+  } catch (error) {
+    return res.status(400).json({ message: error });
   }
-
-  if (!type) {
-    return res.status(400).json({ error: "Type is requried" });
-  }
-
-  const issue = {
-    issueId: Math.ceil(Math.random() * 100),
-    title,
-    type,
-    state: "ToDo",
-  };
-
-  issues.push(issue);
-
-  return res.status(201).json({ success: true, data: issues });
 };
 
 const deleteIssue = (req, res) => {
   const id = parseInt(req.params.id);
+
   const filterIssues = issues.filter((issue) => {
     return issue.issueId !== id;
   });
@@ -71,4 +104,4 @@ const deleteIssue = (req, res) => {
   res.json({ message: "success", data: issues });
 };
 
-export { getIssues, addIssue, deleteIssue, updateIssue };
+export { getIssues, addIssue, deleteIssue, updateIssue, updateChildIssue };
