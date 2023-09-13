@@ -1,0 +1,43 @@
+@import "./colors";
+
+.add-issue-form,
+.issues-dashboard {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+
+  h2 {
+    font-size: 40px;
+  }
+
+  input {
+    margin-top: 5rem;
+    padding: 10px 15px;
+    display: block;
+    width: 300px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+
+  select {
+    display: block;
+    padding: 10px 15px;
+    width: 300px;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  .button {
+    margin-top: 0;
+
+    &:hover {
+      background-color: #dee4e8;
+      cursor: pointer;
+    }
+  }
+}
