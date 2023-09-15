@@ -1,6 +1,17 @@
 @import "./colors";
 
 .issues-dashboard {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+
+  h2 {
+    font-size: 2rem;
+  }
+
   table {
     margin-top: 33px;
     width: 800px;
