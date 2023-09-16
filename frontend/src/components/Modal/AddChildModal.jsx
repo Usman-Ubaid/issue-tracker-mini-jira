@@ -1,10 +1,44 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 
-const AddChildModal = ({ childModalIsOpen, setChildModalIsOpen }) => {
+const AddChildModal = ({
+  childModalIsOpen,
+  setChildModalIsOpen,
+  data,
+  updateIssue,
+}) => {
   const { register, handleSubmit } = useForm();
 
   Modal.setAppElement("#root");
+
+  const SelectOption = ({ updateIssue }) => {
+    let filterType;
+    let filterIssues;
+
+    if (updateIssue.type === "Epic") {
+      filterType = "Epic";
+      filterIssues = data?.filter((item) => item.type !== filterType);
+    } else if (updateIssue.type === "Story") {
+      filterType = "Task";
+      filterIssues = data?.filter((item) => item.type === filterType);
+    } else {
+      return null;
+    }
+
+    return filterIssues.map((issue) => (
+      <option key={issue.issueId}>
+        {issue.issueId}. {issue.title}
+      </option>
+    ));
+  };
+
+  const closeModal = () => {
+    setChildModalIsOpen(false);
+  };
+
+  const handleExistingChildIssue = () => {
+    console.log("Handle existing child issue");
+  };
 
   const customStyles = {
     content: {
@@ -19,20 +53,14 @@ const AddChildModal = ({ childModalIsOpen, setChildModalIsOpen }) => {
     },
   };
 
-  const closeModal = () => {
-    setChildModalIsOpen(false);
-  };
-
-  const handleExistingChildIssue = () => {
-    console.log("Handle existing child issue");
-  };
-
   return (
     <>
       <Modal isOpen={childModalIsOpen} style={customStyles}>
         <div className="child-modal">
           <div className="modal-header">
-            <h2>Link/Add Child Issue</h2>
+            <h2>
+              Link/Add Child Issue to {updateIssue && updateIssue.issueId}
+            </h2>
             <button onClick={closeModal}>Close</button>
           </div>
           <form
@@ -46,9 +74,12 @@ const AddChildModal = ({ childModalIsOpen, setChildModalIsOpen }) => {
                 </legend>
                 <select>
                   <option>Select Issue</option>
-                  <option>Issue 1</option>
-                  <option>Issue 2</option>
-                  <option>Issue 3</option>
+                  <SelectOption updateIssue={updateIssue} />
+                  {/* {data?.map((item) => (
+                    <option key={item.issueId}>
+                      {item.issueId}. {item.title}
+                    </option>
+                  ))} */}
                 </select>
               </fieldset>
 

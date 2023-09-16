@@ -9,9 +9,7 @@ const IssuesDashboard = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [childModalIsOpen, setChildModalIsOpen] = useState(false);
 
-  const getUpdatedIssue = (issue) => {
-    setModalIsOpen(true);
-
+  const getIssue = (issue) => {
     const filterIssue = data.find((item) => {
       return item.issueId === issue.issueId;
     });
@@ -19,7 +17,13 @@ const IssuesDashboard = () => {
     setIssueUpdate(filterIssue);
   };
 
-  const linkIssue = (item) => {
+  const getUpdatedIssue = (issue) => {
+    getIssue(issue);
+    setModalIsOpen(true);
+  };
+
+  const linkIssue = (issue) => {
+    getIssue(issue);
     setChildModalIsOpen(true);
   };
 
@@ -121,9 +125,13 @@ const IssuesDashboard = () => {
                   <td>
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
-                  <td>
-                    <button onClick={() => linkIssue(item)}>Link Issue</button>
-                  </td>
+                  {(item.type === "Epic" || item.type === "Story") && (
+                    <td>
+                      <button onClick={() => linkIssue(item)}>
+                        Link Issue
+                      </button>
+                    </td>
+                  )}
                   <td>
                     <button onClick={() => deleteIssue(item)}>Delete</button>
                   </td>
@@ -144,6 +152,8 @@ const IssuesDashboard = () => {
           <AddChildModal
             childModalIsOpen={childModalIsOpen}
             setChildModalIsOpen={setChildModalIsOpen}
+            data={data}
+            updateIssue={updateIssue}
           />
         </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
