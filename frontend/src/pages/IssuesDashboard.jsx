@@ -152,7 +152,7 @@ const IssuesDashboard = () => {
           <AddChildModal
             childModalIsOpen={childModalIsOpen}
             setChildModalIsOpen={setChildModalIsOpen}
-            data={data}
+            issuesData={data}
             updateIssue={updateIssue}
           />
         </div>

@@ -1,43 +1,66 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+
+const SelectOption = ({ parentIssue, issuesData }) => {
+  let filterType;
+  let filterIssues;
+
+  if (parentIssue.type === "Epic") {
+    filterType = "Epic";
+    filterIssues = issuesData?.filter((item) => item.type !== filterType);
+  } else if (parentIssue.type === "Story") {
+    filterType = "Task";
+    filterIssues = issuesData?.filter((item) => item.type === filterType);
+  } else {
+    return null;
+  }
+
+  return filterIssues.map((issue) => (
+    <option value={issue.issueId} key={issue.issueId}>
+      {issue.issueId}. {issue.title}
+    </option>
+  ));
+};
 
 const AddChildModal = ({
   childModalIsOpen,
   setChildModalIsOpen,
-  data,
+  issuesData,
   updateIssue,
 }) => {
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit } = useForm();
+  const [childIssueId, setChildIssueId] = useState(undefined);
 
   Modal.setAppElement("#root");
-
-  const SelectOption = ({ updateIssue }) => {
-    let filterType;
-    let filterIssues;
-
-    if (updateIssue.type === "Epic") {
-      filterType = "Epic";
-      filterIssues = data?.filter((item) => item.type !== filterType);
-    } else if (updateIssue.type === "Story") {
-      filterType = "Task";
-      filterIssues = data?.filter((item) => item.type === filterType);
-    } else {
-      return null;
-    }
-
-    return filterIssues.map((issue) => (
-      <option key={issue.issueId}>
-        {issue.issueId}. {issue.title}
-      </option>
-    ));
-  };
 
   const closeModal = () => {
     setChildModalIsOpen(false);
   };
 
-  const handleExistingChildIssue = () => {
-    console.log("Handle existing child issue");
+  const handleExistingChildIssue = async (parentIssue, childId) => {
+    const { issueId, children } = parentIssue;
+    const checkExisingChildId = children.some(
+      (child) => child === Number(childId)
+    );
+
+    if (checkExisingChildId) {
+      window.alert("Child Already added.");
+      setChildModalIsOpen(false);
+    } else {
+      try {
+        await fetch(`http://localhost:5000/api/issues/${issueId}/childIssue`, {
+          method: "PUT",
+          body: JSON.stringify({ childId: childId }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setChildModalIsOpen(false);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
   };
 
   const customStyles = {
@@ -58,51 +81,34 @@ const AddChildModal = ({
       <Modal isOpen={childModalIsOpen} style={customStyles}>
         <div className="child-modal">
           <div className="modal-header">
-            <h2>
-              Link/Add Child Issue to {updateIssue && updateIssue.issueId}
-            </h2>
+            <h2>Link Child Issue to {updateIssue && updateIssue.title}</h2>
             <button onClick={closeModal}>Close</button>
           </div>
           <form
             className="add-issue-form"
-            onSubmit={handleSubmit(handleExistingChildIssue)}
+            onSubmit={handleSubmit(() => {
+              if (childIssueId) {
+                handleExistingChildIssue(updateIssue, childIssueId);
+              }
+            })}
           >
             <div className="fieldset-container">
               <fieldset>
                 <legend>
                   <h3>Add from Existing Child Issues</h3>
                 </legend>
-                <select>
-                  <option>Select Issue</option>
-                  <SelectOption updateIssue={updateIssue} />
-                  {/* {data?.map((item) => (
-                    <option key={item.issueId}>
-                      {item.issueId}. {item.title}
-                    </option>
-                  ))} */}
-                </select>
-              </fieldset>
-
-              <fieldset>
-                <legend>
-                  <h3>Add New Child Issue</h3>
-                </legend>
-                <input
-                  {...register("title")}
-                  placeholder="Title of the Issue"
-                />
-
-                <select {...register("type")}>
-                  <option value="Epic">Epic</option>
-                  <option value="Story">Story</option>
-                  <option value="Task">Task</option>
-                </select>
-
-                <select {...register("state")}>
-                  <option value="ToDo">ToDo</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Done">Done</option>
-                </select>
+                {issuesData && (
+                  <select
+                    value={childIssueId}
+                    onChange={(e) => setChildIssueId(e.target.value)}
+                  >
+                    <option value="select-issue">Select an Issue</option>
+                    <SelectOption
+                      parentIssue={updateIssue}
+                      issuesData={issuesData}
+                    />
+                  </select>
+                )}
               </fieldset>
             </div>
 
