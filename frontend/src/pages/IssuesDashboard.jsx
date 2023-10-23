@@ -5,7 +5,7 @@ import AddChildModal from "../components/Modal/AddChildModal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
-  const [updateIssue, setIssueUpdate] = useState();
+  const [updateIssue, setUpdateIssue] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [childModalIsOpen, setChildModalIsOpen] = useState(false);
 
@@ -14,7 +14,7 @@ const IssuesDashboard = () => {
       return item.issueId === issue.issueId;
     });
 
-    setIssueUpdate(filterIssue);
+    setUpdateIssue(filterIssue);
   };
 
   const getUpdatedIssue = (issue) => {
@@ -87,7 +87,7 @@ const IssuesDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
 
   const tableHeadings = [
     {

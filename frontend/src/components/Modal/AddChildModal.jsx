@@ -2,7 +2,7 @@ import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-const SelectOption = ({ parentIssue, issuesData }) => {
+const SelectIssueOption = ({ parentIssue, issuesData }) => {
   let filterType;
   let filterIssues;
 
@@ -38,7 +38,7 @@ const AddChildModal = ({
     setChildModalIsOpen(false);
   };
 
-  const handleExistingChildIssue = async (parentIssue, childId) => {
+  const handleChildIssue = async (parentIssue, childId) => {
     const { issueId, children } = parentIssue;
     const checkExisingChildId = children.some(
       (child) => child === Number(childId)
@@ -88,7 +88,7 @@ const AddChildModal = ({
             className="add-issue-form"
             onSubmit={handleSubmit(() => {
               if (childIssueId) {
-                handleExistingChildIssue(updateIssue, childIssueId);
+                handleChildIssue(updateIssue, childIssueId);
               }
             })}
           >
@@ -103,7 +103,7 @@ const AddChildModal = ({
                     onChange={(e) => setChildIssueId(e.target.value)}
                   >
                     <option value="select-issue">Select an Issue</option>
-                    <SelectOption
+                    <SelectIssueOption
                       parentIssue={updateIssue}
                       issuesData={issuesData}
                     />
