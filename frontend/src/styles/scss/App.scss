@@ -1,0 +1,11 @@
+@import "./global";
+@import "./sidebar";
+@import "./form";
+@import "./issuesDashboard";
+@import "./modal";
+
+// Layout
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}

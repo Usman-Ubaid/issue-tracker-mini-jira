@@ -1,5 +1,4 @@
-$dark-blue: #0f3a58;
-$light-gray: #5c5b5b;
+@import "./colors";
 
 * {
   padding: 0;
@@ -18,7 +17,8 @@ ul {
   color: inherit;
 }
 
-button {
+button,
+.button {
   padding: 5px 10px;
   border-radius: 5px;
   border: none;

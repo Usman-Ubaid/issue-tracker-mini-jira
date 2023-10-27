@@ -19,6 +19,10 @@ const EditModal = ({
     setModalIsOpen(false);
   };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   Modal.setAppElement("#root");
 
   const customStyles = {
@@ -37,6 +41,7 @@ const EditModal = ({
   return (
     <>
       <Modal isOpen={modalIsOpen} style={customStyles}>
+
         <Form
           handleUpdateIssue={handleUpdateIssue}
           updateIssue={updateIssue}
@@ -44,6 +49,7 @@ const EditModal = ({
           placeholderText="Title of the Issue"
           buttonValue="update"
         />
+
       </Modal>
     </>
   );
