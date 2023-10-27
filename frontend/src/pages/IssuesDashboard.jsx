@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/CommonComponents/Layout";
 import EditModal from "../components/Modal/EditModal";
+import { deleteIssue, editIssue, fetchData } from "../services/api";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
@@ -17,69 +18,33 @@ const IssuesDashboard = () => {
     setIssueUpdate(filterIssue);
   };
 
-
-  const deleteIssue = async (issue) => {
-    const filterIssue = data.find((item) => {
-      return item.issueId === issue.issueId;
-    });
-
-    try {
-      await fetch(`http://localhost:5000/api/issues/${filterIssue.issueId}`, {
-        method: "delete",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      setData(
-        data.filter((item) => {
-          return item.issueId !== issue.issueId;
-        })
-      );
-    } catch (error) {
-      console.log("Error deleting issue", error);
-    }
+  const handleDeleteIssue = async (issue) => {
+    const response = await deleteIssue(issue);
+    setData(response.data);
   };
 
+  const handleEditIssue = async (issue) => {
+    const updatedData = data.map((item) =>
+      item.issueId === issue.issueId ? issue : item
+    );
 
-  const postUpdatedIssue = async (issue) => {
-    try {
-      await fetch(`http://localhost:5000/api/issues/${issue.issueId}`, {
-        method: "put",
-        body: JSON.stringify(issue),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const updatedData = data.map((item) =>
-        item.issueId === issue.issueId ? issue : item
-      );
-
-      setData(updatedData);
-    } catch (error) {
-      console.log("Error updating issue", error);
+    if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
+      await editIssue(issue);
     }
-  };
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/issues", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const jsonData = await response.json();
-      setData(jsonData.data);
-    } catch (error) {
-      console.log("Error fetching data: ", error);
-    }
+    setData(updatedData);
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchDataAndSetData = async () => {
+      const fetchedData = await fetchData();
+      setData(fetchedData.data);
+    };
+
+    if (data.length === 0) {
+      fetchDataAndSetData();
+    }
+  }, [data.length, data]);
 
   const tableHeadings = [
     {
@@ -118,11 +83,11 @@ const IssuesDashboard = () => {
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
 
-
                   <td>
-                    <button onClick={() => deleteIssue(item)}>Delete</button>
+                    <button onClick={() => handleDeleteIssue(item)}>
+                      Delete
+                    </button>
                   </td>
-
                 </tr>
               ))}
           </tbody>
@@ -133,7 +98,7 @@ const IssuesDashboard = () => {
             modalIsOpen={modalIsOpen}
             updateIssue={updateIssue}
             setModalIsOpen={setModalIsOpen}
-            postUpdatedIssue={postUpdatedIssue}
+            postUpdatedIssue={handleEditIssue}
           />
         </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
