@@ -30,21 +30,20 @@ const IssuesDashboard = () => {
 
     if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
       await editIssue(issue);
+      setData(updatedData);
     }
 
-    setData(updatedData);
+    return;
+  };
+
+  const fetchDataAndSetData = async () => {
+    const fetchedData = await fetchData();
+    setData(fetchedData.data);
   };
 
   useEffect(() => {
-    const fetchDataAndSetData = async () => {
-      const fetchedData = await fetchData();
-      setData(fetchedData.data);
-    };
-
-    if (data.length === 0) {
-      fetchDataAndSetData();
-    }
-  }, [data.length, data]);
+    fetchDataAndSetData();
+  }, []);
 
   const tableHeadings = [
     {
