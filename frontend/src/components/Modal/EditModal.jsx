@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import { useForm } from "react-hook-form";
+import Form from "../FormComponents/Form";
 
 const EditModal = ({
   modalIsOpen,
@@ -7,8 +7,6 @@ const EditModal = ({
   setModalIsOpen,
   postUpdatedIssue,
 }) => {
-  const { register, handleSubmit } = useForm();
-
   const handleUpdateIssue = (data) => {
     updateIssue = {
       ...updateIssue,
@@ -43,32 +41,15 @@ const EditModal = ({
   return (
     <>
       <Modal isOpen={modalIsOpen} style={customStyles}>
-        <div className="edit-modal">
-          <div className="modal-header">
-            <h2>Update Issue {updateIssue && updateIssue.issueId}</h2>
-            <button onClick={closeModal}>Close</button>
-          </div>
-          <form
-            onSubmit={handleSubmit(handleUpdateIssue)}
-            className="add-issue-form"
-          >
-            <input {...register("title")} placeholder="Title of the Issue" />
 
-            <select {...register("type")}>
-              <option value="Epic">Epic</option>
-              <option value="Story">Story</option>
-              <option value="Task">Task</option>
-            </select>
+        <Form
+          handleUpdateIssue={handleUpdateIssue}
+          updateIssue={updateIssue}
+          title="title"
+          placeholderText="Title of the Issue"
+          buttonValue="update"
+        />
 
-            <select {...register("state")}>
-              <option value="ToDo">ToDo</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Done">Done</option>
-            </select>
-
-            <input type="submit" className="button" value="Update" />
-          </form>
-        </div>
       </Modal>
     </>
   );

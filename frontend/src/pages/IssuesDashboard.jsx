@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/CommonComponents/Layout";
 import EditModal from "../components/Modal/EditModal";
+
+import { deleteIssue, editIssue, fetchData } from "../services/api";
+
 import AddChildModal from "../components/Modal/AddChildModal";
+
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
@@ -22,6 +26,20 @@ const IssuesDashboard = () => {
     setModalIsOpen(true);
   };
 
+
+  const handleDeleteIssue = async (issue) => {
+    const response = await deleteIssue(issue);
+    setData(response.data);
+  };
+
+  const handleEditIssue = async (issue) => {
+    const updatedData = data.map((item) =>
+      item.issueId === issue.issueId ? issue : item
+    );
+
+    if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
+      await editIssue(issue);
+=======
   const linkIssue = (issue) => {
     getIssue(issue);
     setChildModalIsOpen(true);
@@ -64,30 +82,23 @@ const IssuesDashboard = () => {
         item.issueId === issue.issueId ? issue : item
       );
 
+
       setData(updatedData);
-    } catch (error) {
-      console.log("Error updating issue", error);
     }
+
+    return;
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/issues", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const jsonData = await response.json();
-      setData(jsonData.data);
-    } catch (error) {
-      console.log("Error fetching data: ", error);
-    }
+  const fetchDataAndSetData = async () => {
+    const fetchedData = await fetchData();
+    setData(fetchedData.data);
   };
 
   useEffect(() => {
-    fetchData();
-  }, [data]);
+
+    fetchDataAndSetData();
+  }, []);
+
 
   const tableHeadings = [
     {
@@ -125,6 +136,7 @@ const IssuesDashboard = () => {
                   <td>
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
+
                   {(item.type === "Epic" || item.type === "Story") && (
                     <td>
                       <button onClick={() => linkIssue(item)}>
@@ -132,8 +144,11 @@ const IssuesDashboard = () => {
                       </button>
                     </td>
                   )}
+
                   <td>
-                    <button onClick={() => deleteIssue(item)}>Delete</button>
+                    <button onClick={() => handleDeleteIssue(item)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -145,7 +160,7 @@ const IssuesDashboard = () => {
             modalIsOpen={modalIsOpen}
             updateIssue={updateIssue}
             setModalIsOpen={setModalIsOpen}
-            postUpdatedIssue={postUpdatedIssue}
+            postUpdatedIssue={handleEditIssue}
           />
         </div>
         <div>
