@@ -1,0 +1,36 @@
+@import "./colors";
+
+.add-issue-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  fieldset {
+    border: none;
+
+    legend {
+      margin: 1rem auto;
+    }
+  }
+
+  input {
+    margin: 1rem 0;
+    padding: 10px 15px;
+    display: block;
+    width: 300px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+
+  select {
+    margin: 1rem 0;
+    display: block;
+    padding: 10px 15px;
+    width: 300px;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+}

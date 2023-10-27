@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import EditModal from "../components/Modal/EditModal";
+import AddChildModal from "../components/Modal/AddChildModal";
 
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
-  const [updateIssue, setIssueUpdate] = useState();
+  const [updateIssue, setUpdateIssue] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [childModalIsOpen, setChildModalIsOpen] = useState(false);
 
-  const getUpdatedIssue = (issue) => {
-    setModalIsOpen(true);
-
+  const getIssue = (issue) => {
     const filterIssue = data.find((item) => {
       return item.issueId === issue.issueId;
     });
 
-    setIssueUpdate(filterIssue);
+    setUpdateIssue(filterIssue);
   };
 
+  const getUpdatedIssue = (issue) => {
+    getIssue(issue);
+    setModalIsOpen(true);
+  };
+
+  const linkIssue = (issue) => {
+    getIssue(issue);
+    setChildModalIsOpen(true);
+  };
 
   const deleteIssue = async (issue) => {
     const filterIssue = data.find((item) => {
@@ -40,7 +49,6 @@ const IssuesDashboard = () => {
       console.log("Error deleting issue", error);
     }
   };
-
 
   const postUpdatedIssue = async (issue) => {
     try {
@@ -79,7 +87,7 @@ const IssuesDashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
 
   const tableHeadings = [
     {
@@ -117,12 +125,16 @@ const IssuesDashboard = () => {
                   <td>
                     <button onClick={() => getUpdatedIssue(item)}>Edit</button>
                   </td>
-
-
+                  {(item.type === "Epic" || item.type === "Story") && (
+                    <td>
+                      <button onClick={() => linkIssue(item)}>
+                        Link Issue
+                      </button>
+                    </td>
+                  )}
                   <td>
                     <button onClick={() => deleteIssue(item)}>Delete</button>
                   </td>
-
                 </tr>
               ))}
           </tbody>
@@ -134,6 +146,14 @@ const IssuesDashboard = () => {
             updateIssue={updateIssue}
             setModalIsOpen={setModalIsOpen}
             postUpdatedIssue={postUpdatedIssue}
+          />
+        </div>
+        <div>
+          <AddChildModal
+            childModalIsOpen={childModalIsOpen}
+            setChildModalIsOpen={setChildModalIsOpen}
+            issuesData={data}
+            updateIssue={updateIssue}
           />
         </div>
         {(!data || data.length === 0) && <p>No data to show</p>}

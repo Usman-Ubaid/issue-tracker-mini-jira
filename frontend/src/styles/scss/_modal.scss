@@ -1,0 +1,21 @@
+@import "./colors";
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+
+  h2 {
+    flex: 1;
+    text-align: center;
+    padding-left: 4rem;
+  }
+}
+
+.fieldset-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  column-gap: 2rem;
+}

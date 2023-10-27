@@ -21,6 +21,10 @@ const EditModal = ({
     setModalIsOpen(false);
   };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   Modal.setAppElement("#root");
 
   const customStyles = {
@@ -39,27 +43,32 @@ const EditModal = ({
   return (
     <>
       <Modal isOpen={modalIsOpen} style={customStyles}>
-        <form
-          onSubmit={handleSubmit(handleUpdateIssue)}
-          className="add-issue-form"
-        >
-          <h2>Update Issue {updateIssue && updateIssue.issueId}</h2>
-          <input {...register("title")} placeholder="Title of the Issue" />
+        <div className="edit-modal">
+          <div className="modal-header">
+            <h2>Update Issue {updateIssue && updateIssue.issueId}</h2>
+            <button onClick={closeModal}>Close</button>
+          </div>
+          <form
+            onSubmit={handleSubmit(handleUpdateIssue)}
+            className="add-issue-form"
+          >
+            <input {...register("title")} placeholder="Title of the Issue" />
 
-          <select {...register("type")}>
-            <option value="Epic">Epic</option>
-            <option value="Story">Story</option>
-            <option value="Task">Task</option>
-          </select>
+            <select {...register("type")}>
+              <option value="Epic">Epic</option>
+              <option value="Story">Story</option>
+              <option value="Task">Task</option>
+            </select>
 
-          <select {...register("state")}>
-            <option value="ToDo">ToDo</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Done">Done</option>
-          </select>
+            <select {...register("state")}>
+              <option value="ToDo">ToDo</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+            </select>
 
-          <input type="submit" className="button" value="Update" />
-        </form>
+            <input type="submit" className="button" value="Update" />
+          </form>
+        </div>
       </Modal>
     </>
   );
