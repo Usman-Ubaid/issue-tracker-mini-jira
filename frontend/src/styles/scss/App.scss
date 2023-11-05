@@ -1,11 +1,6 @@
 @import "./global";
-@import "./sidebar";
+@import "./navbar";
 @import "./form";
 @import "./issuesDashboard";
 @import "./modal";
-
-// Layout
-.layout-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-}
+@import "./add-issue";
