@@ -1,5 +1,6 @@
 import Modal from "react-modal";
-import Form from "../FormComponents/Form";
+import { useForm } from "react-hook-form";
+import SelectOptions from "../FormComponents/SelectOptions";
 
 const EditModal = ({
   modalIsOpen,
@@ -7,15 +8,16 @@ const EditModal = ({
   setModalIsOpen,
   postUpdatedIssue,
 }) => {
+  const { register, handleSubmit } = useForm();
+
   const handleUpdateIssue = (data) => {
     updateIssue = {
       ...updateIssue,
       title: data.title !== "" ? data.title : updateIssue.title,
-      type: data.type,
-      state: data.state,
+      type: data.issueType,
+      state: data.issueState,
     };
     postUpdatedIssue(updateIssue);
-
     setModalIsOpen(false);
   };
 
@@ -38,18 +40,40 @@ const EditModal = ({
     },
   };
 
+  const typeOptions = [
+    { id: 1, title: "Epic" },
+    { id: 2, title: "Story" },
+    { id: 3, title: "Task" },
+  ];
+
+  const stateOptions = [
+    { id: 1, title: "ToDo" },
+    { id: 2, title: "InProgress" },
+    { id: 3, title: "Done" },
+  ];
+
   return (
     <>
       <Modal isOpen={modalIsOpen} style={customStyles}>
-
-        <Form
-          handleUpdateIssue={handleUpdateIssue}
-          updateIssue={updateIssue}
-          title="title"
-          placeholderText="Title of the Issue"
-          buttonValue="update"
-        />
-
+        <div className="child-modal">
+          <div className="modal-header">
+            <h2>Update "{updateIssue && updateIssue.title}" Issue</h2>
+            <button onClick={closeModal}>Close</button>
+          </div>
+          <form
+            onSubmit={handleSubmit(handleUpdateIssue)}
+            className="add-issue-form"
+          >
+            <input {...register("title")} placeholder="Title of the Issue" />
+            <select {...register("issueType")}>
+              <SelectOptions options={typeOptions} />
+            </select>
+            <select {...register("issueState")}>
+              <SelectOptions options={stateOptions} />
+            </select>
+            <input type="submit" className="button" value="Edit Issue" />
+          </form>
+        </div>
       </Modal>
     </>
   );

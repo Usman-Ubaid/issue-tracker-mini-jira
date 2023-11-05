@@ -1,15 +1,15 @@
-const SelectOptions = ({ isRegister, type, options }) => {
+const SelectOptions = ({ options }) => {
   return (
-    <select {...isRegister(type)}>
+    <>
       {options &&
         options.map((option) => {
           return (
-            <option value={option.title} key={option.id}>
-              {option.title}
+            <option value={option.issueId} key={option.id || option.issueId}>
+              {`${option.issueId ? option.issueId + "." : ""}`} {option.title}
             </option>
           );
         })}
-    </select>
+    </>
   );
 };
 
