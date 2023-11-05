@@ -10,55 +10,49 @@ ul {
   padding: 0;
 }
 
-.nav-link {
+a {
   text-decoration: none;
   color: inherit;
+  padding: 5px 10px;
+  font-weight: 550;
+}
+a:hover {
+  color: #0052cc;
+  background-color: #fff;
+  border-radius: 5px;
 }
 
 button,
 .button {
+  background-color: #0052cc;
+  color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
-  font-weight: bold;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
 button:hover,
 .button:hover {
-  background-color: #dee4e8;
-  cursor: pointer;
+  background-color: hsla(216, 100%, 40%, 0.85);
 }
 
-.sidebar {
-  background-color: #5c5b5b;
-  padding: 0;
-  margin: 0;
-  grid-column: 1/2;
-  height: 100vh;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 9%;
+  background-color: #ccc;
 }
-.sidebar h1 {
-  color: white;
-  text-align: center;
-  padding: 30px 0;
+.navbar h1 {
+  font-size: 1.6rem;
 }
-.sidebar ul {
-  margin: 30px 0 30px 25px;
-}
-.sidebar ul li {
-  margin: 20px 0 20px 0;
-  padding: 10px 0 10px 5px;
-}
-.sidebar ul .default-tab {
-  color: white;
-}
-.sidebar .active-tab {
-  color: #0f3a58;
-  background-color: white;
-  font-weight: bold;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-.sidebar .primary-navbar {
-  grid-column: 2/3;
+.navbar ul {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
 }
 
 .add-issue-form {
@@ -133,7 +127,7 @@ button:hover,
 .modal-header h2 {
   flex: 1;
   text-align: center;
-  padding-left: 4rem;
+  padding-left: 2rem;
 }
 
 .fieldset-container {
@@ -141,9 +135,4 @@ button:hover,
   align-items: flex-start;
   justify-content: space-between;
   column-gap: 2rem;
-}
-
-.layout-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
 }
