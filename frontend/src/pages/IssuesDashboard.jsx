@@ -6,7 +6,6 @@ import { deleteIssue, editIssue, fetchData } from "../services/api";
 
 import AddChildModal from "../components/Modal/AddChildModal";
 
-
 const IssuesDashboard = () => {
   const [data, setData] = useState([]);
   const [updateIssue, setUpdateIssue] = useState();
@@ -26,10 +25,14 @@ const IssuesDashboard = () => {
     setModalIsOpen(true);
   };
 
-
   const handleDeleteIssue = async (issue) => {
     const response = await deleteIssue(issue);
     setData(response.data);
+  };
+
+  const linkIssue = (issue) => {
+    getIssue(issue);
+    setChildModalIsOpen(true);
   };
 
   const handleEditIssue = async (issue) => {
@@ -39,53 +42,8 @@ const IssuesDashboard = () => {
 
     if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
       await editIssue(issue);
-=======
-  const linkIssue = (issue) => {
-    getIssue(issue);
-    setChildModalIsOpen(true);
-  };
-
-  const deleteIssue = async (issue) => {
-    const filterIssue = data.find((item) => {
-      return item.issueId === issue.issueId;
-    });
-
-    try {
-      await fetch(`http://localhost:5000/api/issues/${filterIssue.issueId}`, {
-        method: "delete",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      setData(
-        data.filter((item) => {
-          return item.issueId !== issue.issueId;
-        })
-      );
-    } catch (error) {
-      console.log("Error deleting issue", error);
-    }
-  };
-
-  const postUpdatedIssue = async (issue) => {
-    try {
-      await fetch(`http://localhost:5000/api/issues/${issue.issueId}`, {
-        method: "put",
-        body: JSON.stringify(issue),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const updatedData = data.map((item) =>
-        item.issueId === issue.issueId ? issue : item
-      );
-
-
       setData(updatedData);
     }
-
     return;
   };
 
@@ -95,10 +53,8 @@ const IssuesDashboard = () => {
   };
 
   useEffect(() => {
-
     fetchDataAndSetData();
   }, []);
-
 
   const tableHeadings = [
     {
@@ -169,6 +125,7 @@ const IssuesDashboard = () => {
             setChildModalIsOpen={setChildModalIsOpen}
             issuesData={data}
             updateIssue={updateIssue}
+            setData={setData}
           />
         </div>
         {(!data || data.length === 0) && <p>No data to show</p>}
