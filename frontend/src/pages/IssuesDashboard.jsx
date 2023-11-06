@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Layout from "../components/CommonComponents/Layout";
-import EditModal from "../components/Modal/EditModal";
+import Layout from "../components/commonComponents/Layout";
+import EditModal from "../components/modal/EditModal";
 import { deleteIssue, editIssue, fetchData } from "../services/api";
-import AddChildModal from "../components/Modal/AddChildModal";
+import AddChildModal from "../components/modal/AddChildModal";
 import { useData } from "../hooks/DataContext";
 
 const IssuesDashboard = () => {

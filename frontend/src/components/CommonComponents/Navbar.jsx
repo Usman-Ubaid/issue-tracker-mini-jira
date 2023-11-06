@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import AddIssueModal from "../../pages/AddIssueModal";
+import AddIssueModal from "../modal/AddIssueModal";
 
 const Sidebar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

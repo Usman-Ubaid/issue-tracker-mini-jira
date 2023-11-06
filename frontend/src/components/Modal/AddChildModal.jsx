@@ -2,24 +2,7 @@ import Modal from "react-modal";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import SelectOptions from "../FormComponents/SelectOptions";
-
-// const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => {
-//   return (
-//     <>
-//       <label>{label}</label>
-//       <select
-//         name={name}
-//         ref={ref}
-//         onChange={() => console.log(onChange)}
-//         onBlur={onBlur}
-//       >
-//         <option value="20">20</option>
-//         <option value="30">30</option>
-//       </select>
-//     </>
-//   );
-// });
+import SelectOptions from "../formComponents/SelectOptions";
 
 const AddChildModal = ({
   childModalIsOpen,

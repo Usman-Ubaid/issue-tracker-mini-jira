@@ -1,9 +1,9 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
-import { postData } from "../services/api";
-import { useData } from "../hooks/DataContext";
-import { fetchData } from "../services/api";
-import SelectOptions from "../components/FormComponents/SelectOptions";
+import { postData } from "../../services/api";
+import { useData } from "../../hooks/DataContext";
+import { fetchData } from "../../services/api";
+import SelectOptions from "../formComponents/SelectOptions";
 
 const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
   const { register, handleSubmit, reset } = useForm();
