@@ -23,7 +23,10 @@ export const postData = async (formData) => {
   try {
     const response = await fetch("http://localhost:5000/api/issues", {
       method: "post",
-      body: JSON.stringify({ title: formData.title, type: formData.type }),
+      body: JSON.stringify({
+        title: formData.issueTitle,
+        type: formData.issueType,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -31,9 +34,9 @@ export const postData = async (formData) => {
 
     if (!response.ok) {
       console.log("Failed to post data");
+    } else {
+      console.log("Your Issue has been successfully added.");
     }
-
-    console.log("Your Issue has been successfully added.");
   } catch (error) {
     console.log("Error posting data:", error);
   }

@@ -18,19 +18,29 @@
     margin: 1rem 0;
     padding: 10px 15px;
     display: block;
-    width: 300px;
+    width: 250px;
     font-size: 1.2rem;
-    border-radius: 5px;
-    border: 1px solid black;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+
+    &:focus {
+      outline: none;
+      border: 1px solid black;
+    }
   }
 
   select {
     margin: 1rem 0;
     display: block;
-    padding: 10px 15px;
-    width: 300px;
+    padding: 10px 12px;
+    width: 250px;
     font-size: 1.2rem;
-    border: 1px solid black;
-    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid black;
+    }
   }
 }

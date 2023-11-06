@@ -1,11 +1,13 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { postData } from "../services/api";
+import { useData } from "../hooks/DataContext";
+import { fetchData } from "../services/api";
+import SelectOptions from "../components/FormComponents/SelectOptions";
 
 const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
-  const { register, handleSubmit } = useForm();
-
-  console.log(modalIsOpen);
+  const { register, handleSubmit, reset } = useForm();
+  const { setData } = useData();
 
   Modal.setAppElement("#root");
 
@@ -23,15 +25,27 @@ const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
 
   const handlePostData = async (formData) => {
     await postData(formData);
-  };
-
-  const closeModal = () => {
+    const fetchedData = await fetchData();
+    setData(fetchedData.data);
+    reset({ issueTitle: "", issueType: "" });
     setModalIsOpen(false);
   };
 
+  const closeModal = () => {
+    reset({ issueTitle: "", issueType: "" });
+    setModalIsOpen(false);
+  };
+
+  const selectOptions = [
+    { id: 1, title: "Select Type", optionValue: "" },
+    { id: 2, title: "Epic", optionValue: "Epic" },
+    { id: 3, title: "Story", optionValue: "Story" },
+    { id: 4, title: "Task", optionValue: "Task" },
+  ];
+
   return (
     <Modal isOpen={modalIsOpen} style={customStyles}>
-      <div className="add-issue">
+      <div>
         <div className="modal-header">
           <h2>Create Issue</h2>
           <button onClick={closeModal}>Close</button>
@@ -43,15 +57,14 @@ const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
           className="add-issue-form"
         >
           <input
-            {...register("title", { required: true })}
+            {...register("issueTitle", { required: true })}
             placeholder="Title of the Issue"
           />
-          <select {...register("type", { required: true })}>
-            <option>Epic</option>
-            <option>Story</option>
-            <option>Task</option>
+
+          <select {...register("issueType", { required: true })}>
+            <SelectOptions options={selectOptions} />
           </select>
-          <input type="submit" className="button" value="Add" />
+          <input type="submit" className="button" value="Add Issue" />
         </form>
       </div>
     </Modal>
