@@ -1,6 +1,8 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import SelectOptions from "../formComponents/SelectOptions";
+import ModalHeader from "./modalComponents/ModalHeader";
+import InputButton from "../formComponents/InputButton";
 
 const EditModal = ({
   modalIsOpen,
@@ -31,12 +33,11 @@ const EditModal = ({
     content: {
       top: "50%",
       left: "50%",
-      right: "60%",
+      right: "auto",
       bottom: "auto",
-      marginRight: "-50%",
-      paddingBottom: "5%",
-      borderRadius: "15px",
       transform: "translate(-50%, -50%)",
+      minHeight: "400px",
+      minWidth: "500px",
     },
   };
 
@@ -54,12 +55,12 @@ const EditModal = ({
 
   return (
     <>
-      <Modal isOpen={modalIsOpen} style={customStyles}>
-        <div className="child-modal">
-          <div className="modal-header">
-            <h2>Update "{updateIssue && updateIssue.title}" Issue</h2>
-            <button onClick={closeModal}>Close</button>
-          </div>
+      <Modal isOpen={modalIsOpen} className="modal-container">
+        <div className="modal-overlay">
+          <ModalHeader
+            heading={`Update "${updateIssue && updateIssue.title}" Issue`}
+            closeModal={closeModal}
+          />
           <form
             onSubmit={handleSubmit(handleUpdateIssue)}
             className="add-issue-form"
@@ -71,9 +72,11 @@ const EditModal = ({
             <select {...register("issueState")}>
               <SelectOptions options={stateOptions} />
             </select>
-            <input type="submit" className="button" value="Edit Issue" />
+            <InputButton buttonValue="Edit Issue" />
+            {/* <input type="submit" className="button" value="Edit Issue" /> */}
           </form>
         </div>
+        {/* </div> */}
       </Modal>
     </>
   );

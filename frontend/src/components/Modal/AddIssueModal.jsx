@@ -4,24 +4,14 @@ import { postData } from "../../services/api";
 import { useData } from "../../hooks/DataContext";
 import { fetchData } from "../../services/api";
 import SelectOptions from "../formComponents/SelectOptions";
+import ModalHeader from "./modalComponents/ModalHeader";
+import InputButton from "../formComponents/InputButton";
 
 const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
   const { register, handleSubmit, reset } = useForm();
   const { setData } = useData();
 
   Modal.setAppElement("#root");
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      transform: "translate(-50%, -50%)",
-      minHeight: "400px",
-      minWidth: "500px",
-    },
-  };
 
   const handlePostData = async (formData) => {
     await postData(formData);
@@ -44,12 +34,10 @@ const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
   ];
 
   return (
-    <Modal isOpen={modalIsOpen} style={customStyles}>
-      <div>
-        <div className="modal-header">
-          <h2>Create Issue</h2>
-          <button onClick={closeModal}>Close</button>
-        </div>
+    <Modal isOpen={modalIsOpen} className="modal-container">
+      <div className="modal-overlay">
+        <ModalHeader heading="Create Issue" closeModal={closeModal} />
+
         <form
           onSubmit={handleSubmit(async (data) => {
             await handlePostData(data);
@@ -64,7 +52,7 @@ const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
           <select {...register("issueType", { required: true })}>
             <SelectOptions options={selectOptions} />
           </select>
-          <input type="submit" className="button" value="Add Issue" />
+          <InputButton buttonValue="Add Issue" />
         </form>
       </div>
     </Modal>

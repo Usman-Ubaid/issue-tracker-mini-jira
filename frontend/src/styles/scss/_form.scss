@@ -16,10 +16,10 @@
 
   input {
     margin: 1rem 0;
-    padding: 10px 15px;
+    padding: 7px 10px;
     display: block;
-    width: 250px;
-    font-size: 1.2rem;
+    width: 300px;
+    font-size: 1rem;
     border-radius: 3px;
     border: 1px solid #ccc;
 
@@ -32,9 +32,9 @@
   select {
     margin: 1rem 0;
     display: block;
-    padding: 10px 12px;
-    width: 250px;
-    font-size: 1.2rem;
+    padding: 7px 10px;
+    width: 300px;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 3px;
 
@@ -43,4 +43,11 @@
       border: 1px solid black;
     }
   }
+}
+
+.fieldset-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  column-gap: 2rem;
 }

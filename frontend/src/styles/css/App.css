@@ -69,10 +69,10 @@ button:hover,
 }
 .add-issue-form input {
   margin: 1rem 0;
-  padding: 10px 15px;
+  padding: 7px 10px;
   display: block;
-  width: 250px;
-  font-size: 1.2rem;
+  width: 300px;
+  font-size: 1rem;
   border-radius: 3px;
   border: 1px solid #ccc;
 }
@@ -83,15 +83,22 @@ button:hover,
 .add-issue-form select {
   margin: 1rem 0;
   display: block;
-  padding: 10px 12px;
-  width: 250px;
-  font-size: 1.2rem;
+  padding: 7px 10px;
+  width: 300px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 .add-issue-form select:focus {
   outline: none;
   border: 1px solid black;
+}
+
+.fieldset-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  column-gap: 2rem;
 }
 
 .issues-dashboard {
@@ -126,21 +133,37 @@ button:hover,
   border-bottom: 1px solid #4d4d4d;
 }
 
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.modal-container .modal-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  padding: 2rem 1rem;
+  min-width: 500px;
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 5px 10px 18px #888888, -5px -5px 18px #888888;
+}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .modal-header h2 {
+  font-size: 1.4rem;
   flex: 1;
   text-align: center;
-  padding-left: 2rem;
-}
-
-.fieldset-container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  column-gap: 2rem;
+  padding-left: 1rem;
 }

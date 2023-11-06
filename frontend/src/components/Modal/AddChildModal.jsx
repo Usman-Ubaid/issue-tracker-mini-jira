@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import SelectOptions from "../formComponents/SelectOptions";
+import ModalHeader from "./modalComponents/ModalHeader";
+import InputButton from "../formComponents/InputButton";
 
 const AddChildModal = ({
   childModalIsOpen,
@@ -42,6 +44,7 @@ const AddChildModal = ({
 
     if (checkExisingChildId) {
       window.alert("Child Already added.");
+      reset({ issues: "" });
       setChildModalIsOpen(false);
     } else {
       try {
@@ -57,7 +60,7 @@ const AddChildModal = ({
         );
         const newData = await response.json();
         setData(newData.data);
-        setChildIssueId("");
+        reset({ issues: "" });
         setChildModalIsOpen(false);
       } catch (error) {
         console.log("Error", error);
@@ -65,27 +68,14 @@ const AddChildModal = ({
     }
   };
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "60%",
-      bottom: "auto",
-      marginRight: "-50%",
-      paddingBottom: "5%",
-      borderRadius: "15px",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
   return (
     <>
-      <Modal isOpen={childModalIsOpen} style={customStyles}>
-        <div className="child-modal">
-          <div className="modal-header">
-            <h2>Link Child Issue to {updateIssue && updateIssue.title}</h2>
-            <button onClick={closeModal}>Close</button>
-          </div>
+      <Modal isOpen={childModalIsOpen} className="modal-container">
+        <div className="modal-overlay">
+          <ModalHeader
+            heading={`Link Child Issue to ${updateIssue && updateIssue.title}`}
+            closeModal={closeModal}
+          />
 
           <form
             className="add-issue-form"
@@ -110,13 +100,7 @@ const AddChildModal = ({
                 />
               </select>
             </fieldset>
-
-            <input
-              type="submit"
-              className="button"
-              value="Add Child Issue"
-              onClick={() => reset({ issues: "" })}
-            />
+            <InputButton buttonValue="Add Child Issue" />
           </form>
         </div>
       </Modal>
