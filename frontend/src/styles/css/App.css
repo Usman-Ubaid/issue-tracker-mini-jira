@@ -101,36 +101,63 @@ button:hover,
   column-gap: 2rem;
 }
 
-.issues-dashboard {
-  margin-top: 32px;
+.dashboard {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  row-gap: 20px;
+  justify-content: center;
+  margin-top: 3rem;
+  padding: 0 9%;
 }
-.issues-dashboard h2 {
-  font-size: 2rem;
+.dashboard .dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 2rem;
 }
-.issues-dashboard table {
-  margin-top: 33px;
-  width: 800px;
-  background-color: #5c5b5b;
+.dashboard .dashboard-header ul {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+.dashboard .dashboard-body {
+  width: 100%;
+  box-shadow: 5px 5px 5px #ccc, -5px -3px 5px #ccc;
   border-radius: 5px;
-  color: #fff;
 }
-.issues-dashboard table thead {
-  margin: 30px;
+.dashboard table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.issues-dashboard table thead th {
-  padding: 15px 0;
+.dashboard table thead {
+  text-align: center;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #000;
 }
-.issues-dashboard table tr {
+.dashboard table thead th {
+  width: 200px;
+  padding: 1rem 0;
+}
+.dashboard table tbody {
   text-align: center;
 }
-.issues-dashboard table tbody td {
-  padding: 15px 0;
-  border-bottom: 1px solid #4d4d4d;
+.dashboard table tbody tr div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard table tbody tr div input {
+  width: 18px;
+  height: 18px;
+}
+.dashboard table tbody tr div input:hover {
+  cursor: pointer;
+}
+.dashboard table tbody td {
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  width: 200px;
 }
 
 .modal-container {

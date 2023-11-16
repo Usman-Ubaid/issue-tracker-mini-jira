@@ -42,9 +42,9 @@ export const postData = async (formData) => {
   }
 };
 
-export const deleteIssue = async (issue) => {
+export const deleteIssue = async (id) => {
   try {
-    const response = await fetch(`${BASE_URL}/${issue.issueId}`, {
+    const response = await fetch(`${BASE_URL}/${id}`, {
       method: "delete",
       headers: {
         "Content-Type": "application/json",

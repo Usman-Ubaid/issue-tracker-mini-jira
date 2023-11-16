@@ -9,29 +9,40 @@ const IssuesDashboard = () => {
   const [updateIssue, setUpdateIssue] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [childModalIsOpen, setChildModalIsOpen] = useState(false);
+  const [selectedCheckBox, setSelectedCheckbox] = useState(null);
   const { data, setData } = useData();
 
-  const getIssue = (issue) => {
+  const getIssue = (issueId) => {
     const filterIssue = data.find((item) => {
-      return item.issueId === issue.issueId;
+      return item.issueId === issueId;
     });
 
     setUpdateIssue(filterIssue);
   };
 
-  const getUpdatedIssue = (issue) => {
-    getIssue(issue);
+  const toggleCheckBox = (issueId) => {
+    if (selectedCheckBox === issueId) {
+      setSelectedCheckbox(null);
+    } else {
+      setSelectedCheckbox(issueId);
+    }
+  };
+
+  const getUpdatedIssue = (id) => {
+    getIssue(id);
     setModalIsOpen(true);
   };
 
-  const handleDeleteIssue = async (issue) => {
-    const response = await deleteIssue(issue);
+  const handleDeleteIssue = async (id) => {
+    const response = await deleteIssue(id);
     setData(response.data);
+    setSelectedCheckbox(null);
   };
 
   const linkIssue = (issue) => {
     getIssue(issue);
     setChildModalIsOpen(true);
+    setSelectedCheckbox(null);
   };
 
   const handleEditIssue = async (issue) => {
@@ -42,6 +53,7 @@ const IssuesDashboard = () => {
     if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
       await editIssue(issue);
       setData(updatedData);
+      setSelectedCheckbox(null);
     }
     return;
   };
@@ -66,49 +78,62 @@ const IssuesDashboard = () => {
 
   return (
     <Layout>
-      <div className="issues-dashboard">
-        <h2>Issues Dashboard</h2>
-        <table>
-          <thead>
-            {tableHeadings.map((heading) => (
-              <tr key={heading.id}>
-                <th>{heading.id}</th>
-                <th>{heading.title}</th>
-                <th>{heading.type}</th>
-                <th>{heading.status}</th>
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {data &&
-              data.length > 0 &&
-              data.map((item) => (
-                <tr key={item.issueId}>
-                  <td>{item.issueId}</td>
-                  <td>{item.title}</td>
-                  <td>{item.type}</td>
-                  <td>{item.state}</td>
-                  <td>
-                    <button onClick={() => getUpdatedIssue(item)}>Edit</button>
-                  </td>
-
-                  {(item.type === "Epic" || item.type === "Story") && (
-                    <td>
-                      <button onClick={() => linkIssue(item)}>
-                        Link Issue
-                      </button>
-                    </td>
-                  )}
-
-                  <td>
-                    <button onClick={() => handleDeleteIssue(item)}>
-                      Delete
-                    </button>
-                  </td>
+      <div className="dashboard">
+        <div className="dashboard-header">
+          <h2>Dashboard</h2>
+          {selectedCheckBox && (
+            <ul>
+              <li>
+                <button onClick={() => getUpdatedIssue(selectedCheckBox)}>
+                  Edit
+                </button>
+              </li>
+              <li>
+                <button onClick={() => linkIssue(selectedCheckBox)}>
+                  Link Issue
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleDeleteIssue(selectedCheckBox)}>
+                  Delete
+                </button>
+              </li>
+            </ul>
+          )}
+        </div>
+        <div className="dashboard-body">
+          <table>
+            <thead>
+              {tableHeadings.map((heading) => (
+                <tr key={heading.id}>
+                  <th>{heading.id}</th>
+                  <th>{heading.title}</th>
+                  <th>{heading.type}</th>
+                  <th>{heading.status}</th>
                 </tr>
               ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data &&
+                data.length > 0 &&
+                data.map((item) => (
+                  <tr key={item.issueId}>
+                    <div>
+                      <input
+                        type="checkbox"
+                        onChange={() => toggleCheckBox(item.issueId)}
+                        checked={selectedCheckBox === item.issueId}
+                      />
+                      <td>{item.issueId}</td>
+                    </div>
+                    <td>{item.title}</td>
+                    <td>{item.type}</td>
+                    <td>{item.state}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
 
         <div>
           <EditModal
