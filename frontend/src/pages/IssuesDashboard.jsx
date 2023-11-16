@@ -4,6 +4,8 @@ import EditModal from "../components/modal/EditModal";
 import { deleteIssue, editIssue, fetchData } from "../services/api";
 import AddChildModal from "../components/modal/AddChildModal";
 import { useData } from "../hooks/DataContext";
+import TableHead from "../components/tableComponents/TableHead";
+import TableBody from "../components/tableComponents/TableBody";
 
 const IssuesDashboard = () => {
   const [updateIssue, setUpdateIssue] = useState();
@@ -42,7 +44,6 @@ const IssuesDashboard = () => {
   const linkIssue = (issue) => {
     getIssue(issue);
     setChildModalIsOpen(true);
-    setSelectedCheckbox(null);
   };
 
   const handleEditIssue = async (issue) => {
@@ -53,7 +54,6 @@ const IssuesDashboard = () => {
     if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
       await editIssue(issue);
       setData(updatedData);
-      setSelectedCheckbox(null);
     }
     return;
   };
@@ -66,15 +66,6 @@ const IssuesDashboard = () => {
   useEffect(() => {
     fetchDataAndSetData();
   }, []);
-
-  const tableHeadings = [
-    {
-      id: "Issue Id",
-      title: "Issue Title",
-      type: "Issue Type",
-      status: "Status",
-    },
-  ];
 
   return (
     <Layout>
@@ -103,55 +94,28 @@ const IssuesDashboard = () => {
         </div>
         <div className="dashboard-body">
           <table>
-            <thead>
-              {tableHeadings.map((heading) => (
-                <tr key={heading.id}>
-                  <th>{heading.id}</th>
-                  <th>{heading.title}</th>
-                  <th>{heading.type}</th>
-                  <th>{heading.status}</th>
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {data &&
-                data.length > 0 &&
-                data.map((item) => (
-                  <tr key={item.issueId}>
-                    <div>
-                      <input
-                        type="checkbox"
-                        onChange={() => toggleCheckBox(item.issueId)}
-                        checked={selectedCheckBox === item.issueId}
-                      />
-                      <td>{item.issueId}</td>
-                    </div>
-                    <td>{item.title}</td>
-                    <td>{item.type}</td>
-                    <td>{item.state}</td>
-                  </tr>
-                ))}
-            </tbody>
+            <TableHead />
+            <TableBody
+              data={data}
+              toggleCheckBox={toggleCheckBox}
+              selectedCheckBox={selectedCheckBox}
+            />
           </table>
         </div>
 
-        <div>
-          <EditModal
-            modalIsOpen={modalIsOpen}
-            updateIssue={updateIssue}
-            setModalIsOpen={setModalIsOpen}
-            postUpdatedIssue={handleEditIssue}
-          />
-        </div>
-        <div>
-          <AddChildModal
-            childModalIsOpen={childModalIsOpen}
-            setChildModalIsOpen={setChildModalIsOpen}
-            issuesData={data}
-            updateIssue={updateIssue}
-            setData={setData}
-          />
-        </div>
+        <EditModal
+          modalIsOpen={modalIsOpen}
+          updateIssue={updateIssue}
+          setModalIsOpen={setModalIsOpen}
+          postUpdatedIssue={handleEditIssue}
+        />
+        <AddChildModal
+          childModalIsOpen={childModalIsOpen}
+          setChildModalIsOpen={setChildModalIsOpen}
+          issuesData={data}
+          updateIssue={updateIssue}
+          setData={setData}
+        />
         {(!data || data.length === 0) && <p>No data to show</p>}
       </div>
     </Layout>

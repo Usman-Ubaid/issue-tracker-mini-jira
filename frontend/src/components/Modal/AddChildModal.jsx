@@ -1,10 +1,11 @@
 import Modal from "react-modal";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { addChildIssue } from "../../services/api";
 import SelectOptions from "../formComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
 import InputButton from "../formComponents/InputButton";
+import { childSelectIssueOptions } from "../../utils/childSelectIssueOptions";
 
 const AddChildModal = ({
   childModalIsOpen,
@@ -23,21 +24,6 @@ const AddChildModal = ({
     reset({ issues: "" });
   };
 
-  const selectIssueOption = (parentIssue, issuesData) => {
-    let filterType;
-    let filterIssues;
-
-    if (parentIssue?.type === "Epic") {
-      filterType = "Epic";
-      filterIssues = issuesData?.filter((item) => item.type !== filterType);
-    } else if (parentIssue?.type === "Story") {
-      filterType = "Task";
-      filterIssues = issuesData?.filter((item) => item.type === filterType);
-    }
-
-    return filterIssues;
-  };
-
   const handleChildIssue = async (parentIssue, childId) => {
     const { issueId, children } = parentIssue;
     const checkExisingChildId = children.includes(Number(childId));
@@ -47,24 +33,10 @@ const AddChildModal = ({
       reset({ issues: "" });
       setChildModalIsOpen(false);
     } else {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/issues/${issueId}/childIssue`,
-          {
-            method: "PUT",
-            body: JSON.stringify({ childId: childId }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const newData = await response.json();
-        setData(newData.data);
-        reset({ issues: "" });
-        setChildModalIsOpen(false);
-      } catch (error) {
-        console.log("Error", error);
-      }
+      const result = await addChildIssue(issueId, childId);
+      setData(result.data);
+      reset({ issues: "" });
+      setChildModalIsOpen(false);
     }
   };
 
@@ -96,7 +68,7 @@ const AddChildModal = ({
               >
                 <option value="">Select an Issue</option>
                 <SelectOptions
-                  options={selectIssueOption(updateIssue, issuesData)}
+                  options={childSelectIssueOptions(updateIssue, issuesData)}
                 />
               </select>
             </fieldset>

@@ -109,6 +109,11 @@ button:hover,
   margin-top: 3rem;
   padding: 0 9%;
 }
+.dashboard p {
+  margin-top: 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
 .dashboard .dashboard-header {
   display: flex;
   align-items: center;
@@ -142,22 +147,26 @@ button:hover,
 .dashboard table tbody {
   text-align: center;
 }
-.dashboard table tbody tr div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dashboard table tbody tr div input {
-  width: 18px;
-  height: 18px;
-}
-.dashboard table tbody tr div input:hover {
-  cursor: pointer;
-}
 .dashboard table tbody td {
   padding: 1.5rem;
   font-size: 1.1rem;
   width: 200px;
+}
+.dashboard table tbody td div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard table tbody td label {
+  flex: 1;
+}
+.dashboard table tbody td input {
+  width: 16px;
+  height: 16px;
+}
+.dashboard table tbody td input:hover {
+  cursor: pointer;
 }
 
 .modal-container {

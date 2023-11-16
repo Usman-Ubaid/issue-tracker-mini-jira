@@ -29,18 +29,6 @@ const EditModal = ({
 
   Modal.setAppElement("#root");
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      transform: "translate(-50%, -50%)",
-      minHeight: "400px",
-      minWidth: "500px",
-    },
-  };
-
   const typeOptions = [
     { id: 1, title: "Epic" },
     { id: 2, title: "Story" },
@@ -58,7 +46,7 @@ const EditModal = ({
       <Modal isOpen={modalIsOpen} className="modal-container">
         <div className="modal-overlay">
           <ModalHeader
-            heading={`Update "${updateIssue && updateIssue.title}" Issue`}
+            heading={`Update ${updateIssue && updateIssue.title} Issue`}
             closeModal={closeModal}
           />
           <form
@@ -73,10 +61,8 @@ const EditModal = ({
               <SelectOptions options={stateOptions} />
             </select>
             <InputButton buttonValue="Edit Issue" />
-            {/* <input type="submit" className="button" value="Edit Issue" /> */}
           </form>
         </div>
-        {/* </div> */}
       </Modal>
     </>
   );

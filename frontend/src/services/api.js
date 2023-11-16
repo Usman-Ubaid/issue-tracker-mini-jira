@@ -74,3 +74,24 @@ export const editIssue = async (issue) => {
     console.log("Error editing the issue:", error);
   }
 };
+
+export const addChildIssue = async (id, childId) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/issues/${id}/childIssue`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ childId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      console.log("Failed to delete the issue");
+    }
+    return response.json();
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
