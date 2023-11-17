@@ -36,7 +36,6 @@
 
   table {
     width: 100%;
-    border-collapse: collapse;
 
     thead {
       text-align: center;
@@ -56,6 +55,22 @@
         padding: 1.5rem;
         font-size: 1.1rem;
         width: 200px;
+
+        label.todo {
+          padding: 5px 10px;
+          border-radius: 8px;
+          background-color: rgb(91, 255, 91);
+        }
+        label.inprogress {
+          padding: 5px 10px;
+          border-radius: 8px;
+          background-color: rgb(255, 180, 95);
+        }
+        label.done {
+          padding: 5px 10px;
+          border-radius: 8px;
+          background-color: rgb(0, 119, 255);
+        }
 
         div {
           display: flex;

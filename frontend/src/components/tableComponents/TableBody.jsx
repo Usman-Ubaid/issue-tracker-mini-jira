@@ -17,7 +17,19 @@ const TableBody = ({ data, toggleCheckBox, selectedCheckBox }) => {
             </td>
             <td>{item.title}</td>
             <td>{item.type}</td>
-            <td>{item.state}</td>
+            <td>
+              <label
+                className={
+                  item.state === "ToDo"
+                    ? "todo"
+                    : item.state === "InProgress"
+                    ? "inprogress"
+                    :  "done"
+                }
+              >
+                {item.state}
+              </label>
+            </td>
           </tr>
         ))}
     </tbody>
