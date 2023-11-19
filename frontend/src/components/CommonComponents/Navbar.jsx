@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import AddIssueModal from "../modal/AddIssueModal";
+import CreateIssueModal from "../modal/CreateIssueModal";
 
 const Sidebar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -19,7 +19,7 @@ const Sidebar = () => {
           <button onClick={createIssueHandler}>Create Issue</button>
         </li>
       </ul>
-      <AddIssueModal
+      <CreateIssueModal
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
       />

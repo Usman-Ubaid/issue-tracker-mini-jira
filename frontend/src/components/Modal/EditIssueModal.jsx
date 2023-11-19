@@ -4,13 +4,13 @@ import SelectOptions from "../formComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
 import InputButton from "../formComponents/InputButton";
 
-const EditModal = ({
+const EditIssueModal = ({
   modalIsOpen,
   updateIssue,
   setModalIsOpen,
   postUpdatedIssue,
 }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const handleUpdateIssue = (data) => {
     updateIssue = {
@@ -21,44 +21,45 @@ const EditModal = ({
     };
     postUpdatedIssue(updateIssue);
     setModalIsOpen(false);
+    reset({ title: "", issueType: "", issueState: "" });
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+    reset({ title: "" });
   };
 
   Modal.setAppElement("#root");
 
-  const typeOptions = [
-    { id: 1, title: "Epic" },
-    { id: 2, title: "Story" },
-    { id: 3, title: "Task" },
+  const selectTypeOptions = [
+    { id: 1, title: "Select Type", optionValue: "" },
+    { id: 2, title: "Epic", optionValue: "Epic" },
+    { id: 3, title: "Story", optionValue: "Story" },
+    { id: 4, title: "Task", optionValue: "Task" },
   ];
 
-  const stateOptions = [
-    { id: 1, title: "ToDo" },
-    { id: 2, title: "InProgress" },
-    { id: 3, title: "Done" },
+  const selectStateOptions = [
+    { id: 1, title: "Select Type", optionValue: "" },
+    { id: 2, title: "ToDo", optionValue: "ToDo" },
+    { id: 3, title: "InProgress", optionValue: "InProgress" },
+    { id: 4, title: "Done", optionValue: "Done" },
   ];
 
   return (
     <>
       <Modal isOpen={modalIsOpen} className="modal-container">
         <div className="modal-overlay">
-          <ModalHeader
-            heading={`Update ${updateIssue && updateIssue.title} Issue`}
-            closeModal={closeModal}
-          />
+          <ModalHeader heading="Edit Issue" closeModal={closeModal} />
           <form
             onSubmit={handleSubmit(handleUpdateIssue)}
             className="add-issue-form"
           >
             <input {...register("title")} placeholder="Title of the Issue" />
-            <select {...register("issueType")}>
-              <SelectOptions options={typeOptions} />
+            <select {...register("issueType", { required: true })}>
+              <SelectOptions options={selectTypeOptions} />
             </select>
-            <select {...register("issueState")}>
-              <SelectOptions options={stateOptions} />
+            <select {...register("issueState", { required: true })}>
+              <SelectOptions options={selectStateOptions} />
             </select>
             <InputButton buttonValue="Edit Issue" />
           </form>
@@ -67,4 +68,4 @@ const EditModal = ({
     </>
   );
 };
-export default EditModal;
+export default EditIssueModal;

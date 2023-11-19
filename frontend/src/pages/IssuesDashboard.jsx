@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/commonComponents/Layout";
-import EditModal from "../components/modal/EditModal";
+import EditIssueModal from "../components/modal/EditIssueModal";
 import { deleteIssue, editIssue, fetchData } from "../services/api";
 import AddChildModal from "../components/modal/AddChildModal";
 import { useData } from "../hooks/DataContext";
@@ -103,7 +103,7 @@ const IssuesDashboard = () => {
           </table>
         </div>
 
-        <EditModal
+        <EditIssueModal
           modalIsOpen={modalIsOpen}
           updateIssue={updateIssue}
           setModalIsOpen={setModalIsOpen}

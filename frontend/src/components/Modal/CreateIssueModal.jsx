@@ -7,7 +7,7 @@ import SelectOptions from "../formComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
 import InputButton from "../formComponents/InputButton";
 
-const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
+const CreateIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
   const { register, handleSubmit, reset } = useForm();
   const { setData } = useData();
 
@@ -59,4 +59,4 @@ const AddIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
   );
 };
 
-export default AddIssueModal;
+export default CreateIssueModal;

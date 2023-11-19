@@ -44,10 +44,7 @@ const AddChildModal = ({
     <>
       <Modal isOpen={childModalIsOpen} className="modal-container">
         <div className="modal-overlay">
-          <ModalHeader
-            heading={`Link Child Issue to ${updateIssue && updateIssue.title}`}
-            closeModal={closeModal}
-          />
+          <ModalHeader heading="Link Child Issue" closeModal={closeModal} />
 
           <form
             className="add-issue-form"
