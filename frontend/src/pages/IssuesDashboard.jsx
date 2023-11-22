@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Layout from "../components/commonComponents/Layout";
-import EditIssueModal from "../components/modal/EditIssueModal";
+import Layout from "../components/CommonComponents/Layout";
+import EditIssueModal from "../components/Modal/EditIssueModal";
 import { deleteIssue, editIssue, fetchData } from "../services/api";
-import AddChildModal from "../components/modal/AddChildModal";
+import AddChildModal from "../components/Modal/AddChildModal";
 import { useData } from "../hooks/DataContext";
 import TableHead from "../components/tableComponents/TableHead";
 import TableBody from "../components/tableComponents/TableBody";
@@ -60,7 +60,7 @@ const IssuesDashboard = () => {
 
   const fetchDataAndSetData = async () => {
     const fetchedData = await fetchData();
-    setData(fetchedData.data);
+    setData(fetchedData?.data);
   };
 
   useEffect(() => {

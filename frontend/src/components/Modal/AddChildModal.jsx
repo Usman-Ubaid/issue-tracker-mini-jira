@@ -2,9 +2,9 @@ import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { addChildIssue } from "../../services/api";
-import SelectOptions from "../formComponents/SelectOptions";
+import SelectOptions from "../FormComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
-import InputButton from "../formComponents/InputButton";
+import InputButton from "../FormComponents/InputButton";
 import { childSelectIssueOptions } from "../../utils/childSelectIssueOptions";
 
 const AddChildModal = ({

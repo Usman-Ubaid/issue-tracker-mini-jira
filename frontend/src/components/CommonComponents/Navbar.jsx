@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import CreateIssueModal from "../modal/CreateIssueModal";
+import CreateIssueModal from "../Modal/CreateIssueModal";
 
-const Sidebar = () => {
+const Navbar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const createIssueHandler = () => {
@@ -27,4 +27,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Navbar;

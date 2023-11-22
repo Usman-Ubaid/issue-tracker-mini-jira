@@ -1,8 +1,8 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
-import SelectOptions from "../formComponents/SelectOptions";
+import SelectOptions from "../FormComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
-import InputButton from "../formComponents/InputButton";
+import InputButton from "../FormComponents/InputButton";
 
 const EditIssueModal = ({
   modalIsOpen,
