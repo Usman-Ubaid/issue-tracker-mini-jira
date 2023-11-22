@@ -59,7 +59,7 @@ const AddChildModal = ({
                 <h3>Add from Existing Child Issues</h3>
               </legend>
               <select
-                {...register("issues")}
+                {...register("issues", { required: true })}
                 value={childIssueId}
                 onChange={(e) => setChildIssueId(e.target.value)}
               >
