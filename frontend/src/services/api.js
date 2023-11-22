@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-export const BASE_URL = "http://localhost:5000/api/issues";
+export const BASE_URL = "https://issue-tracker-mini-jira.vercel.app/api/issues";
 
 export const fetchData = async () => {
   try {
@@ -21,7 +21,7 @@ export const fetchData = async () => {
 
 export const postData = async (formData) => {
   try {
-    const response = await fetch("http://localhost:5000/api/issues", {
+    const response = await fetch(`${BASE_URL}`, {
       method: "post",
       body: JSON.stringify({
         title: formData.issueTitle,
@@ -77,16 +77,13 @@ export const editIssue = async (issue) => {
 
 export const addChildIssue = async (id, childId) => {
   try {
-    const response = await fetch(
-      `http://localhost:5000/api/issues/${id}/childIssue`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ childId }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${BASE_URL}${id}/childIssue`, {
+      method: "PUT",
+      body: JSON.stringify({ childId }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       console.log("Failed to delete the issue");
     }
