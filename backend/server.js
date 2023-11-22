@@ -15,6 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", issueRoutes);
 
+app.get("/", (req, res) => {
+  res.json("Hello");
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on PORT: ${process.env.PORT}`);
 });
