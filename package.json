@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/server.js",
-    "build": "cd frontend && npm install && npm run build"
+    "build": "react-scripts build"
   },
   "author": "Usman-Ubaid",
   "license": "ISC"
