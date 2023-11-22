@@ -77,7 +77,7 @@ export const editIssue = async (issue) => {
 
 export const addChildIssue = async (id, childId) => {
   try {
-    const response = await fetch(`${BASE_URL}${id}/childIssue`, {
+    const response = await fetch(`${BASE_URL}/${id}/childIssue`, {
       method: "PUT",
       body: JSON.stringify({ childId }),
       headers: {
@@ -85,7 +85,7 @@ export const addChildIssue = async (id, childId) => {
       },
     });
     if (!response.ok) {
-      console.log("Failed to delete the issue");
+      console.log("Failed to link the issue");
     }
     return response.json();
   } catch (error) {
