@@ -18,25 +18,27 @@ const getIssues = async (req, res) => {
   }
 };
 
-const updateIssue = (req, res) => {
-  const id = parseInt(req.params.id);
+const updateIssue = async (req, res) => {
+  const id = req.params.id;
   const { title, type, state } = req.body;
 
-  const issueToUpdate = issues.find((issue) => issue.issueId === id);
+  const issue = await Issue.findById(id);
 
   try {
-    issueToUpdate.title = title || issueToUpdate.title;
-    issueToUpdate.type = type || issueToUpdate.type;
-    issueToUpdate.state = state || issueToUpdate.state;
-  } catch (error) {
-    if (!issueToUpdate) {
-      return res.status(404).json({ error: "Issue not found" });
-    } else {
-      return res.json({ error: "Error updating the issue" });
-    }
-  }
+    if (issue) {
+      issue.title = title || issue.title;
+      issue.type = type || issue.type;
+      issue.state = state || issue.state;
 
-  res.json({ issueToUpdate });
+      await issue.save();
+
+      return res.status(200).json({ message: "Issue Updated" });
+    } else {
+      return res.status(400).json({ message: "Issue not Found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 };
 
 const updateChildIssue = (req, res) => {
@@ -91,9 +93,10 @@ const addIssue = async (req, res) => {
     }
     const newIssue = { title, type };
     const issue = await new Issue(newIssue).save();
-    return res
-      .status(201)
-      .json({ message: "success", data: { id: issue._id } });
+    return res.status(201).json({
+      message: "success",
+      data: { id: issue._id },
+    });
   } catch (error) {
     return res.status(400).json({ message: error });
   }
