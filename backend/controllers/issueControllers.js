@@ -3,11 +3,14 @@ import Issue from "../models/Issue.js";
 
 let issues = [];
 
-const getIssues = (req, res) => {
+//* GET ISSUES */
+
+const getIssues = async (req, res) => {
   try {
+    const allIssues = await Issue.find();
     return res
       .status(200)
-      .json({ message: "Data fetched successfully ", data: issues });
+      .json({ message: "Data fetched successfully ", data: allIssues });
   } catch (error) {
     return res
       .status(500)
