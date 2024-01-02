@@ -1,4 +1,5 @@
 import { createIssue } from "./helpers/createIssue.js";
+import Issue from "../models/Issue.js";
 
 let issues = [];
 
@@ -76,13 +77,20 @@ const updateChildIssue = (req, res) => {
   return res.status(201).json({ message: "success", data: issues });
 };
 
-const addIssue = (req, res) => {
+//* ADD ISSUE */
+
+const addIssue = async (req, res) => {
   const { title, type } = req.body;
 
   try {
-    const newIssue = createIssue(title, type);
-    issues.push(newIssue);
-    return res.status(201).json({ message: "success", data: newIssue });
+    if (!title || !type) {
+      return res.status(400).json({ message: "Fill all the fields" });
+    }
+    const newIssue = { title, type };
+    const issue = await new Issue(newIssue).save();
+    return res
+      .status(201)
+      .json({ message: "success", data: { id: issue._id } });
   } catch (error) {
     return res.status(400).json({ message: error });
   }
