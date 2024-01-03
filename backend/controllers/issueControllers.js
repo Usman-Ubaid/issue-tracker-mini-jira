@@ -3,7 +3,7 @@ import Issue from "../models/Issue.js";
 
 let issues = [];
 
-//* GET ISSUES */
+/********************** GET ISSUE *********************/
 
 const getIssues = async (req, res) => {
   try {
@@ -18,16 +18,38 @@ const getIssues = async (req, res) => {
   }
 };
 
+/********************** ADD ISSUE *********************/
+
+const addIssue = async (req, res) => {
+  const { title, issueType } = req.body;
+
+  try {
+    if (!title || !issueType) {
+      return res.status(400).json({ message: "Fill all the fields" });
+    }
+    const newIssue = { title, issueType };
+    const issue = await new Issue(newIssue).save();
+    return res.status(201).json({
+      message: "success",
+      data: { id: issue._id },
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
+};
+
+/********************** UPDATE ISSUE *********************/
+
 const updateIssue = async (req, res) => {
   const id = req.params.id;
-  const { title, type, state } = req.body;
+  const { title, issueType, state } = req.body;
 
   const issue = await Issue.findById(id);
 
   try {
     if (issue) {
       issue.title = title || issue.title;
-      issue.type = type || issue.type;
+      issue.issueType = issueType || issue.issueType;
       issue.state = state || issue.state;
 
       await issue.save();
@@ -36,6 +58,26 @@ const updateIssue = async (req, res) => {
     } else {
       return res.status(400).json({ message: "Issue not Found" });
     }
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
+
+/********************** DELETE ISSUE *********************/
+
+const deleteIssue = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const issue = await Issue.findById(id);
+
+    if (!issue) {
+      return res.status(400).json({ message: "No issue found" });
+    }
+
+    await issue.deleteOne();
+
+    res.json({ message: "Issue removed" });
   } catch (error) {
     return res.status(500).json({ message: error });
   }
@@ -80,42 +122,6 @@ const updateChildIssue = (req, res) => {
   }
 
   return res.status(201).json({ message: "success", data: issues });
-};
-
-//* ADD ISSUE */
-
-const addIssue = async (req, res) => {
-  const { title, issueType } = req.body;
-
-  try {
-    if (!title || !issueType) {
-      return res.status(400).json({ message: "Fill all the fields" });
-    }
-    const newIssue = { title, issueType };
-    const issue = await new Issue(newIssue).save();
-    return res.status(201).json({
-      message: "success",
-      data: { id: issue._id },
-    });
-  } catch (error) {
-    return res.status(400).json({ message: error });
-  }
-};
-
-const deleteIssue = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  const filterIssues = issues.filter((issue) => {
-    return issue.issueId !== id;
-  });
-
-  if (filterIssues.length === issues.length) {
-    return res.json({ error: "ID does not exist" });
-  }
-
-  issues = filterIssues;
-
-  res.json({ message: "success", data: issues });
 };
 
 export { getIssues, addIssue, deleteIssue, updateIssue, updateChildIssue };
