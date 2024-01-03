@@ -1,16 +1,19 @@
 import mongoose from "mongoose";
 
-const issueTypes = ["Epic", "Story", "Task"];
-
 const IssueSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
   },
-  type: {
+  issueType: {
     type: String,
     required: true,
-    enum: issueTypes,
+    enum: ["Epic", "Story", "Task"],
+  },
+  state: {
+    type: String,
+    default: "ToDo",
+    enum: ["ToDo", "InProgress", "Done"],
   },
   createdAt: {
     type: Date,
@@ -19,4 +22,5 @@ const IssueSchema = new mongoose.Schema({
 });
 
 const Issue = mongoose.model("Issue", IssueSchema);
+
 export default Issue;

@@ -85,13 +85,13 @@ const updateChildIssue = (req, res) => {
 //* ADD ISSUE */
 
 const addIssue = async (req, res) => {
-  const { title, type } = req.body;
+  const { title, issueType } = req.body;
 
   try {
-    if (!title || !type) {
+    if (!title || !issueType) {
       return res.status(400).json({ message: "Fill all the fields" });
     }
-    const newIssue = { title, type };
+    const newIssue = { title, issueType };
     const issue = await new Issue(newIssue).save();
     return res.status(201).json({
       message: "success",
