@@ -83,45 +83,47 @@ const deleteIssue = async (req, res) => {
   }
 };
 
-const updateChildIssue = (req, res) => {
-  const parentId = parseInt(req.params.id);
-  const childId = parseInt(req.body.childId);
-  const { title, type } = req.body;
+const addChild = async (req, res) => {
+  const parentId = req.params.id;
+  const { childId } = req.body;
 
-  const childIssue = issues.find((issue) => issue.issueId === childId);
-  const parentIssue = issues.find((issue) => issue.issueId === parentId);
+  try {
+    const childIssue = await Issue.findById(childId);
+    const parentIssue = await Issue.findById(parentId);
 
-  if (!parentIssue || (!childIssue && !(title && type))) {
-    return res.status(400).json({ error: "Invalid request" });
+    if (!parentIssue || !childIssue) {
+      return res.status(400).json({ error: "ID not found" });
+    }
+
+    if (parentIssue.issueType === "Task") {
+      return res
+        .status(400)
+        .json({ error: "Issue type of 'Task' cannot have children" });
+    }
+
+    if (parentIssue.issueType === childIssue?.issueType) {
+      return res
+        .status(400)
+        .json({ error: "Same issue type cannot be each other's children" });
+    }
+
+    if (parentIssue.issueType === "Story" && childIssue?.issueType === "Epic") {
+      return res.status(400).json({ error: "Epic cannot be a child of Story" });
+    }
+
+    if (childIssue) {
+      if (parentIssue.children.includes(childId)) {
+        return res.status(400).json({ error: "Child already added" });
+      }
+      parentIssue.children.push(childIssue._id);
+    }
+
+    await parentIssue.save();
+
+    return res.status(201).json({ message: "success", data: parentIssue });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
-
-  if (parentIssue.type !== "Epic" && parentIssue.type !== "Story") {
-    return res.status(400).json({ error: "Task cannot have children" });
-  }
-
-  if (parentIssue.type === childIssue?.type) {
-    return res
-      .status(400)
-      .json({ error: "Same issue type cannot be each other's children" });
-  }
-
-  if (parentIssue.type === "Story" && childIssue?.type === "Epic") {
-    return res.status(400).json({ error: "Epic cannot be a child of Story" });
-  }
-
-  if (!parentIssue.children) {
-    parentIssue.children = [];
-  }
-
-  if (childIssue) {
-    parentIssue.children.push(childId);
-  } else if (title && type) {
-    const newChildIssue = createIssue(title, type);
-    parentIssue.children.push(newChildIssue.issueId);
-    issues.push(newChildIssue);
-  }
-
-  return res.status(201).json({ message: "success", data: issues });
 };
 
-export { getIssues, addIssue, deleteIssue, updateIssue, updateChildIssue };
+export { getIssues, addIssue, deleteIssue, updateIssue, addChild };

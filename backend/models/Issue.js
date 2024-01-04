@@ -15,6 +15,12 @@ const IssueSchema = new mongoose.Schema({
     default: "ToDo",
     enum: ["ToDo", "InProgress", "Done"],
   },
+  children: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Issue",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
