@@ -15,8 +15,8 @@ const EditIssueModal = ({
   const handleUpdateIssue = (data) => {
     updateIssue = {
       ...updateIssue,
-      title: data.title !== "" ? data.title : updateIssue.title,
-      type: data.issueType,
+      title: data.title === "" ? updateIssue?.title : data.title,
+      issueType: data.issueType,
       state: data.issueState,
     };
     postUpdatedIssue(updateIssue);

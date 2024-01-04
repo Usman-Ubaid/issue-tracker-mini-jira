@@ -63,8 +63,9 @@ export const deleteIssue = async (id) => {
 };
 
 export const editIssue = async (issue) => {
+  console.log()
   try {
-    const response = await fetch(`${BASE_URL}/${issue.issueId}`, {
+    const response = await fetch(`${BASE_URL}/${issue._id}`, {
       method: "put",
       body: JSON.stringify(issue),
       headers: {

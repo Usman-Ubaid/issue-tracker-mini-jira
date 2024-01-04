@@ -16,7 +16,7 @@ const IssuesDashboard = () => {
 
   const getIssue = (issueId) => {
     const filterIssue = data.find((item) => {
-      return item.issueId === issueId;
+      return item._id === issueId;
     });
 
     setUpdateIssue(filterIssue);
@@ -52,7 +52,7 @@ const IssuesDashboard = () => {
 
   const handleEditIssue = async (issue) => {
     const updatedData = data.map((item) =>
-      item.issueId === issue.issueId ? issue : item
+      item._id === issue._id ? issue : item
     );
 
     if (JSON.stringify(updatedData) !== JSON.stringify(data)) {
