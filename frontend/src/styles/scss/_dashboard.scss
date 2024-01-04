@@ -21,6 +21,11 @@
     width: 80%;
     margin-bottom: 2rem;
 
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 80%;
+    }
+
     ul {
       display: flex;
       align-items: center;
@@ -32,6 +37,10 @@
     width: 80%;
     box-shadow: 5px 5px 5px #ccc, -5px -3px 5px #ccc;
     border-radius: 5px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 
   table {
@@ -58,25 +67,28 @@
       td {
         padding: 1.5rem;
         font-size: 1.1rem;
-        width:auto;
+        width: auto;
 
         &:first-child {
           width: 30px;
         }
+        label {
+          padding: 5px 10px;
+          border-radius: 15px;
+
+          @media (max-width: 480px) {
+            padding: 2px 6px;
+            font-size: 8px;
+          }
+        }
 
         label.todo {
-          padding: 5px 10px;
-          border-radius: 8px;
           background-color: rgb(124, 254, 124);
         }
         label.inprogress {
-          padding: 5px 10px;
-          border-radius: 8px;
           background-color: rgb(255, 180, 95);
         }
         label.done {
-          padding: 5px 10px;
-          border-radius: 8px;
           background-color: rgb(0, 119, 255);
         }
 

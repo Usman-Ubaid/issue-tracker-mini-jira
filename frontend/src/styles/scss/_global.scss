@@ -49,3 +49,24 @@ button,
     cursor: pointer;
   }
 }
+
+@media (max-width: 768px) {
+  html {
+    font-size: 80%;
+  }
+  .input-checkbox {
+    width: 10px;
+    height: 10px;
+  }
+  button,
+  .button {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 60%;
+  }
+}
