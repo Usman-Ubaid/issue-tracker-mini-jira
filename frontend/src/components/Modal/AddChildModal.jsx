@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { addChildIssue } from "../../services/api";
+import { addChildIssue, fetchData } from "../../services/api";
 import SelectOptions from "../FormComponents/SelectOptions";
 import ModalHeader from "./modalComponents/ModalHeader";
 import InputButton from "../FormComponents/InputButton";
@@ -25,16 +25,17 @@ const AddChildModal = ({
   };
 
   const handleChildIssue = async (parentIssue, childId) => {
-    const { issueId, children } = parentIssue;
-    const checkExisingChildId = children.includes(Number(childId));
+    const { _id, children } = parentIssue;
+    const checkExisingChildId = children.includes(childId);
 
     if (checkExisingChildId) {
       window.alert("Child Already added.");
       reset({ issues: "" });
       setChildModalIsOpen(false);
     } else {
-      const result = await addChildIssue(issueId, childId);
-      setData(result.data);
+      await addChildIssue(_id, childId);
+      const fetchedData = await fetchData();
+      setData(fetchedData.data);
       reset({ issues: "" });
       setChildModalIsOpen(false);
     }

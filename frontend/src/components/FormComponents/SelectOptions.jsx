@@ -5,8 +5,8 @@ const SelectOptions = ({ options }) => {
         options.map((option) => {
           return (
             <option
-              value={option.issueId || option.optionValue}
-              key={option.id || option.issueId}
+              value={option._id || option.optionValue}
+              key={option._id || option.id}
             >
               {`${option.issueId ? option.issueId + "." : ""}`} {option.title}
             </option>
