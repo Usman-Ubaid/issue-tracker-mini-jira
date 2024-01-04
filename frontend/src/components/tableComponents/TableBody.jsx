@@ -4,19 +4,19 @@ const TableBody = ({ data, toggleCheckBox, selectedCheckBox }) => {
       {data &&
         data.length > 0 &&
         data.map((item) => (
-          <tr key={item.issueId}>
-            <td>
+          <tr key={item._id}>
+            {/* <td>
               <div>
                 <input
                   type="checkbox"
-                  onChange={() => toggleCheckBox(item.issueId)}
-                  checked={selectedCheckBox === item.issueId}
+                  onChange={() => toggleCheckBox(item._id)}
+                  checked={selectedCheckBox === item._id}
                 />
-                <label>{item.issueId}</label>
+                <label>{item._id}</label>
               </div>
-            </td>
+            </td> */}
             <td>{item.title}</td>
-            <td>{item.type}</td>
+            <td>{item.issueType}</td>
             <td>
               <label
                 className={
@@ -24,7 +24,7 @@ const TableBody = ({ data, toggleCheckBox, selectedCheckBox }) => {
                     ? "todo"
                     : item.state === "InProgress"
                     ? "inprogress"
-                    :  "done"
+                    : "done"
                 }
               >
                 {item.state}

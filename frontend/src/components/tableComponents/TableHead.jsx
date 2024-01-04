@@ -1,7 +1,6 @@
 const TableHead = () => {
   const tableHeadings = [
     {
-      id: "Issue Id",
       title: "Issue Title",
       type: "Issue Type",
       status: "Status",
@@ -10,9 +9,8 @@ const TableHead = () => {
 
   return (
     <thead>
-      {tableHeadings.map((heading) => (
-        <tr key={heading.id}>
-          <th>{heading.id}</th>
+      {tableHeadings.map((heading, index) => (
+        <tr key={index}>
           <th>{heading.title}</th>
           <th>{heading.type}</th>
           <th>{heading.status}</th>
