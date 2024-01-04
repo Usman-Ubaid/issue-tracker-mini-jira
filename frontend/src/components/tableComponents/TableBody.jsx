@@ -5,16 +5,14 @@ const TableBody = ({ data, toggleCheckBox, selectedCheckBox }) => {
         data.length > 0 &&
         data.map((item) => (
           <tr key={item._id}>
-            {/* <td>
-              <div>
+            <td>
                 <input
                   type="checkbox"
+                  className="input-checkbox"
                   onChange={() => toggleCheckBox(item._id)}
                   checked={selectedCheckBox === item._id}
                 />
-                <label>{item._id}</label>
-              </div>
-            </td> */}
+            </td>
             <td>{item.title}</td>
             <td>{item.issueType}</td>
             <td>

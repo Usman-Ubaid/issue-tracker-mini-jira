@@ -40,3 +40,12 @@ button,
     background-color: hsla(216, 100%, 40%, 85%);
   }
 }
+
+.input-checkbox {
+  width: 16px;
+  height: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -11,6 +11,7 @@ const TableHead = () => {
     <thead>
       {tableHeadings.map((heading, index) => (
         <tr key={index}>
+          <th></th>
           <th>{heading.title}</th>
           <th>{heading.type}</th>
           <th>{heading.status}</th>

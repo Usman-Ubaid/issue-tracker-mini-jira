@@ -38,6 +38,14 @@ button:hover,
   background-color: hsla(216, 100%, 40%, 0.85);
 }
 
+.input-checkbox {
+  width: 16px;
+  height: 16px;
+}
+.input-checkbox:hover {
+  cursor: pointer;
+}
+
 .navbar {
   display: flex;
   align-items: center;
@@ -118,7 +126,7 @@ button:hover,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 80%;
   margin-bottom: 2rem;
 }
 .dashboard .dashboard-header ul {
@@ -127,7 +135,7 @@ button:hover,
   column-gap: 20px;
 }
 .dashboard .dashboard-body {
-  width: 100%;
+  width: 80%;
   box-shadow: 5px 5px 5px #ccc, -5px -3px 5px #ccc;
   border-radius: 5px;
 }
@@ -140,8 +148,11 @@ button:hover,
   border-bottom: 2px solid #000;
 }
 .dashboard table thead th {
-  width: 200px;
+  width: auto;
   padding: 1rem 0;
+}
+.dashboard table thead th:first-child {
+  width: 30px;
 }
 .dashboard table tbody {
   text-align: center;
@@ -149,7 +160,10 @@ button:hover,
 .dashboard table tbody td {
   padding: 1.5rem;
   font-size: 1.1rem;
-  width: 200px;
+  width: auto;
+}
+.dashboard table tbody td:first-child {
+  width: 30px;
 }
 .dashboard table tbody td label.todo {
   padding: 5px 10px;
@@ -174,13 +188,6 @@ button:hover,
 }
 .dashboard table tbody td label {
   flex: 1;
-}
-.dashboard table tbody td input {
-  width: 16px;
-  height: 16px;
-}
-.dashboard table tbody td input:hover {
-  cursor: pointer;
 }
 
 .modal-container {
