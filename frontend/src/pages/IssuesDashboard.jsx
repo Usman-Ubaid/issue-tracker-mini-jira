@@ -36,8 +36,12 @@ const IssuesDashboard = () => {
   };
 
   const handleDeleteIssue = async (id) => {
-    const response = await deleteIssue(id);
-    setData(response.data);
+    await deleteIssue(id);
+    setData(() =>
+      data.filter((elem) => {
+        return elem._id !== id;
+      })
+    );
     setSelectedCheckbox(null);
   };
 
@@ -58,13 +62,12 @@ const IssuesDashboard = () => {
     return;
   };
 
-  const fetchDataAndSetData = async () => {
-    const fetchedData = await fetchData();
-    setData(fetchedData?.data);
-  };
-
   useEffect(() => {
-    fetchDataAndSetData();
+    const getData = async () => {
+      const fetchedData = await fetchData();
+      setData(fetchedData.data);
+    };
+    getData();
   }, []);
 
   return (

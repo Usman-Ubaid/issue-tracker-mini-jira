@@ -14,7 +14,7 @@ export const fetchData = async () => {
     if (!response.ok) {
       console.log("Failed to fetch Data");
     }
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.log("Error fetching Data:", error);
   }
@@ -54,6 +54,7 @@ export const deleteIssue = async (id) => {
 
     if (!response.ok) {
       console.log("Failed to delete the issue");
+      return;
     }
     return response.json();
   } catch (error) {
