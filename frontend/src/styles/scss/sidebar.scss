@@ -1,0 +1,27 @@
+.sidebar {
+  width: 200px;
+  background: rgb(244, 245, 247);
+  height: 100vh;
+
+  .head {
+    text-align: center;
+    margin: 2rem 0;
+
+    h3 {
+      color: rgb(66, 82, 110);
+      margin-bottom: 5px;
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .list-items {
+    margin: 0 22px;
+
+    li {
+      margin-bottom: 14px;
+    }
+  }
+}

@@ -1,24 +1,23 @@
-@import "./colors";
+// @import "./colors";
 
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1rem 9%;
-  background-color: #ccc;
+// .navbar {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 1rem 9%;
+//   background-color: #ccc;
 
-  h1 {
-    font-size: 1.6rem;
-  }
+//   h1 {
+//     font-size: 1.6rem;
+//   }
 
-  ul {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
+//   ul {
+//     display: flex;
+//     align-items: center;
+//     gap: 3rem;
 
-    @media (max-width: 480px) {
-      gap: 1rem;
-    }
-  }
-}
+//     @media (max-width: 480px) {
+//       gap: 1rem;
+//     }
+//   }
+// }

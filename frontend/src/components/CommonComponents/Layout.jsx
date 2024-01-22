@@ -1,10 +1,14 @@
 import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const Layout = ({ children }) => {
   return (
     <div>
-      <Navbar />
-      <div>{children}</div>
+      <div className="app-container">
+        <Sidebar />
+        <Navbar />
+      </div>
+      {/* <div>{children}</div> */}
     </div>
   );
 };

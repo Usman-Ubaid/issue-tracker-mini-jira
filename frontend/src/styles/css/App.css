@@ -14,7 +14,7 @@ a {
   text-decoration: none;
   color: inherit;
   padding: 5px 10px;
-  font-weight: 550;
+  font-weight: normal;
 }
 a:hover {
   color: #0052cc;
@@ -65,28 +65,6 @@ button:hover,
     font-size: 60%;
   }
 }
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1rem 9%;
-  background-color: #ccc;
-}
-.navbar h1 {
-  font-size: 1.6rem;
-}
-.navbar ul {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-}
-@media (max-width: 480px) {
-  .navbar ul {
-    gap: 1rem;
-  }
-}
-
 .add-issue-form {
   display: flex;
   flex-direction: column;
@@ -262,4 +240,31 @@ button:hover,
   flex: 1;
   text-align: center;
   padding-left: 1rem;
+}
+
+.sidebar {
+  width: 200px;
+  background: rgb(244, 245, 247);
+  height: 100vh;
+}
+.sidebar .head {
+  text-align: center;
+  margin: 2rem 0;
+}
+.sidebar .head h3 {
+  color: rgb(66, 82, 110);
+  margin-bottom: 5px;
+}
+.sidebar .head span {
+  font-size: 14px;
+}
+.sidebar .list-items {
+  margin: 0 22px;
+}
+.sidebar .list-items li {
+  margin-bottom: 14px;
+}
+
+.app-container {
+  display: flex;
 }

@@ -3,5 +3,8 @@
 @import "./form";
 @import "./dashboard";
 @import "./modal";
+@import "./sidebar";
 
-
+.app-container {
+  display: flex;
+}
