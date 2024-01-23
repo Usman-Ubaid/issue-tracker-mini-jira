@@ -1,0 +1,19 @@
+@import "./colors";
+
+.header {
+  width: calc(100% - 200px);
+  height: 100px;
+  margin: 2rem 0;
+  padding: 0 3rem;
+
+  h1 {
+    font-size: 1.6rem;
+  }
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
