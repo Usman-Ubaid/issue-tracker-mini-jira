@@ -1,10 +1,15 @@
 @import "./colors";
 
 .header {
-  width: calc(100% - 200px);
   height: 100px;
-  margin: 2rem 0;
+  margin: 2.2rem 0;
   padding: 0 3rem;
+
+  p {
+    color: rgb(94, 108, 132);
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
 
   h1 {
     font-size: 1.6rem;

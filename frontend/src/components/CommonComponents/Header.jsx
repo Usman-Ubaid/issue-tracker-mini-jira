@@ -9,6 +9,7 @@ const Header = () => {
   };
   return (
     <div className="header">
+      <p>Projects / Project 1 / Kanban Board</p>
       <div className="header-content">
         <h1>Kanban Board</h1>
         <button onClick={createIssueHandler}>Create Issue</button>

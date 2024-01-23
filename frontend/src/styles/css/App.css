@@ -66,10 +66,14 @@ button:hover,
   }
 }
 .header {
-  width: calc(100% - 200px);
   height: 100px;
-  margin: 2rem 0;
+  margin: 2.2rem 0;
   padding: 0 3rem;
+}
+.header p {
+  color: rgb(94, 108, 132);
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 .header h1 {
   font-size: 1.6rem;
@@ -272,6 +276,7 @@ button:hover,
 .sidebar .head h3 {
   color: rgb(66, 82, 110);
   margin-bottom: 5px;
+  font-size: 20px;
 }
 .sidebar .head span {
   font-size: 14px;
@@ -284,5 +289,6 @@ button:hover,
 }
 
 .app-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 200px calc(100% - 200px);
 }
