@@ -7,7 +7,7 @@ import { useData } from "../hooks/DataContext";
 import TableHead from "../components/tableComponents/TableHead";
 import TableBody from "../components/tableComponents/TableBody";
 
-const IssuesDashboard = () => {
+const KanbanBoard = () => {
   const [updateIssue, setUpdateIssue] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [childModalIsOpen, setChildModalIsOpen] = useState(false);
@@ -125,4 +125,4 @@ const IssuesDashboard = () => {
   );
 };
 
-export default IssuesDashboard;
+export default KanbanBoard;

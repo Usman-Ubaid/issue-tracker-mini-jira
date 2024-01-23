@@ -65,6 +65,23 @@ button:hover,
     font-size: 60%;
   }
 }
+.header {
+  width: calc(100% - 200px);
+  height: 100px;
+  margin: 2rem 0;
+  padding: 0 3rem;
+}
+.header h1 {
+  font-size: 1.6rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .add-issue-form {
   display: flex;
   flex-direction: column;
@@ -246,10 +263,11 @@ button:hover,
   width: 200px;
   background: rgb(244, 245, 247);
   height: 100vh;
+  padding: 2rem 0;
 }
 .sidebar .head {
   text-align: center;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 }
 .sidebar .head h3 {
   color: rgb(66, 82, 110);
