@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./Header";
 import Sidebar from "./Sidebar";
 
 const Layout = ({ children }) => {

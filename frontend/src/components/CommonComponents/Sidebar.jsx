@@ -10,10 +10,7 @@ const Sidebar = () => {
       <div className="list-items">
         <ul>
           <li>
-            <Link>Kanban Board</Link>
-          </li>
-          <li>
-            <Link>Create Issue</Link>
+            <Link to="/">Kanban Board</Link>
           </li>
         </ul>
       </div>

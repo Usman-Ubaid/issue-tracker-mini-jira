@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import IssuesDashboard from "../pages/IssuesDashboard";
+import KanbanBoard from "../pages/KanbanBoard";
 
 const ReactRouter = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<IssuesDashboard />} />
+        <Route path="/" element={<KanbanBoard />} />
       </Routes>
     </>
   );
