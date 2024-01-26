@@ -1,58 +1,81 @@
 import Modal from "react-modal";
-import { useForm } from "react-hook-form";
+import Select from "react-select";
+import { useForm, Controller } from "react-hook-form";
 import { postData } from "../../services/api";
 import { useData } from "../../hooks/DataContext";
 import { fetchData } from "../../services/api";
-import SelectOptions from "../FormComponents/SelectOptions";
-import ModalHeader from "./modalComponents/ModalHeader";
-import InputButton from "../FormComponents/InputButton";
 
-const CreateIssueModal = ({ modalIsOpen, setModalIsOpen }) => {
-  const { register, handleSubmit, reset } = useForm();
+const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      issueSummary: "",
+      issueType: {},
+    },
+  });
+
   const { setData } = useData();
 
   Modal.setAppElement("#root");
 
-  const handlePostData = async (formData) => {
+  const options = [
+    { value: "Epic", label: "Epic" },
+    { value: "Story", label: "Story" },
+    { value: "Task", label: "Task" },
+  ];
+
+  const onSubmit = async (formData) => {
     await postData(formData);
     const fetchedData = await fetchData();
     setData(fetchedData.data);
-    reset({ issueTitle: "", issueType: "" });
-    setModalIsOpen(false);
+    reset({ issueSummary: "", issueType: {} });
+    closeModal();
   };
-
-  const closeModal = () => {
-    reset({ issueTitle: "", issueType: "" });
-    setModalIsOpen(false);
-  };
-
-  const selectOptions = [
-    { id: 1, title: "Select Type", optionValue: "" },
-    { id: 2, title: "Epic", optionValue: "Epic" },
-    { id: 3, title: "Story", optionValue: "Story" },
-    { id: 4, title: "Task", optionValue: "Task" },
-  ];
 
   return (
-    <Modal isOpen={modalIsOpen} className="modal-container">
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      className="modal-container"
+    >
       <div className="modal-overlay">
-        <ModalHeader heading="Create Issue" closeModal={closeModal} />
-
+        <h2>Create Issue</h2>
         <form
-          onSubmit={handleSubmit(async (data) => {
-            await handlePostData(data);
-          })}
+          method="post"
+          onSubmit={handleSubmit(onSubmit)}
           className="add-issue-form"
         >
-          <input
-            {...register("issueTitle", { required: true })}
-            placeholder="Title of the Issue"
+          <label htmlFor="issueType">Issue Type</label>
+          <Controller
+            name="issueType"
+            control={control}
+            rules={{ required: true }}
+            render={({ field, value }) => (
+              <Select
+                {...field}
+                id="issueType"
+                value={options.find((option) => option.value === value)}
+                options={options}
+                required
+              />
+            )}
           />
 
-          <select {...register("issueType", { required: true })}>
-            <SelectOptions options={selectOptions} />
-          </select>
-          <InputButton buttonValue="Add Issue" />
+          <hr className="divide-line"></hr>
+
+          <label htmlFor="issueSummary">Short Summary</label>
+          <Controller
+            name="issueSummary"
+            control={control}
+            render={({ field }) => <input {...field} id="issueSummary" />}
+            rules={{ required: true }}
+          />
+
+          <div className="btn-group">
+            <button className="btn">Create Issue</button>
+            <button className="cancel-btn" onClick={closeModal}>
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </Modal>

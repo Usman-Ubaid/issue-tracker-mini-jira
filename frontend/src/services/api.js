@@ -21,12 +21,13 @@ export const fetchData = async () => {
 };
 
 export const postData = async (formData) => {
+  const { issueSummary, issueType } = formData;
   try {
     const response = await fetch(`${BASE_URL}`, {
       method: "post",
       body: JSON.stringify({
-        title: formData.issueTitle,
-        issueType: formData.issueType,
+        title: issueSummary,
+        issueType: issueType.value,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +64,7 @@ export const deleteIssue = async (id) => {
 };
 
 export const editIssue = async (issue) => {
-  console.log()
+  console.log();
   try {
     const response = await fetch(`${BASE_URL}/${issue._id}`, {
       method: "put",

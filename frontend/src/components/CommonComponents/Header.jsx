@@ -4,19 +4,21 @@ import CreateIssueModal from "../Modal/CreateIssueModal";
 const Header = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const createIssueHandler = () => {
+  const openModal = () => {
     setModalIsOpen(true);
   };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <div className="header">
       <p>Projects / Project 1 / Kanban Board</p>
       <div className="header-content">
         <h1>Kanban Board</h1>
-        <button onClick={createIssueHandler}>Create Issue</button>
-        <CreateIssueModal
-          modalIsOpen={modalIsOpen}
-          setModalIsOpen={setModalIsOpen}
-        />
+        <button onClick={openModal}>Create Issue</button>
+        <CreateIssueModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
       </div>
     </div>
   );
