@@ -26,7 +26,7 @@ button,
 .button {
   background-color: #0052cc;
   color: #fff;
-  padding: 5px 10px;
+  padding: 8px 10px;
   border-radius: 3px;
   border: none;
   font-weight: 600;
@@ -87,145 +87,55 @@ button:hover,
 }
 
 .add-issue-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-top: 20px;
 }
-.add-issue-form fieldset {
-  border: none;
-}
-.add-issue-form fieldset legend {
-  margin: 1rem auto;
+.add-issue-form label {
+  margin-top: 17px;
+  padding-bottom: 4px;
+  display: block;
+  color: rgb(94, 108, 132);
 }
 .add-issue-form input {
-  margin: 1rem 0;
-  padding: 7px 10px;
   display: block;
-  width: 300px;
-  font-size: 1rem;
-  border-radius: 3px;
-  border: 1px solid #ccc;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
+  width: 100%;
+  padding: 9px 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 .add-issue-form input:focus {
   outline: none;
-  border: 1px solid black;
+  border-color: #2684ff;
+  border-width: 2.2px;
 }
-.add-issue-form select {
-  margin: 1rem 0;
-  display: block;
-  padding: 7px 10px;
-  width: 300px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+.add-issue-form .divide-line {
+  margin-top: 20px;
 }
-.add-issue-form select:focus {
-  outline: none;
-  border: 1px solid black;
-}
-
-.fieldset-container {
+.add-issue-form .btn-group {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  column-gap: 2rem;
-}
-
-.dashboard {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
-  padding: 0 9%;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 30px;
 }
-.dashboard p {
-  margin-top: 3rem;
-  font-size: 1.3rem;
-  font-weight: 600;
+.add-issue-form .btn-group .cancel-btn {
+  background-color: #fff;
+  color: rgb(66, 82, 110);
 }
-.dashboard .dashboard-header {
+.add-issue-form .btn-group .cancel-btn:hover {
+  background-color: hsl(0, 0%, 90%);
+}
+
+.board {
+  padding: 0 3rem;
+}
+
+.board-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
-  margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-  .dashboard .dashboard-header {
-    width: 100%;
-    font-size: 80%;
-  }
-}
-.dashboard .dashboard-header ul {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
-}
-.dashboard .dashboard-body {
-  width: 80%;
-  box-shadow: 5px 5px 5px #ccc, -5px -3px 5px #ccc;
-  border-radius: 5px;
-}
-@media (max-width: 768px) {
-  .dashboard .dashboard-body {
-    width: 100%;
-  }
-}
-.dashboard table {
-  width: 100%;
-}
-.dashboard table thead {
-  text-align: center;
-  font-size: 1.2rem;
-  border-bottom: 2px solid #000;
-}
-.dashboard table thead th {
-  width: auto;
-  padding: 1rem 0;
-}
-.dashboard table thead th:first-child {
-  width: 30px;
-}
-.dashboard table tbody {
-  text-align: center;
-}
-.dashboard table tbody td {
-  padding: 1.5rem;
-  font-size: 1.1rem;
-  width: auto;
-}
-.dashboard table tbody td:first-child {
-  width: 30px;
-}
-.dashboard table tbody td label {
-  padding: 5px 10px;
-  border-radius: 15px;
-}
-@media (max-width: 480px) {
-  .dashboard table tbody td label {
-    padding: 2px 6px;
-    font-size: 8px;
-  }
-}
-.dashboard table tbody td label.todo {
-  background-color: rgb(124, 254, 124);
-}
-.dashboard table tbody td label.inprogress {
-  background-color: rgb(255, 180, 95);
-}
-.dashboard table tbody td label.done {
-  background-color: rgb(0, 119, 255);
-}
-.dashboard table tbody td div {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-.dashboard table tbody td label {
-  flex: 1;
+  column-gap: 2rem;
 }
 
 .modal-container {
@@ -234,7 +144,7 @@ button:hover,
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(9, 30, 66, 0.55);
 }
 .modal-container .modal-overlay {
   position: absolute;
@@ -243,24 +153,93 @@ button:hover,
   right: auto;
   bottom: auto;
   transform: translate(-50%, -50%);
-  padding: 2rem 1rem;
+  padding: 2rem 1.5rem;
   min-width: 500px;
   border-radius: 3px;
   background-color: #fff;
-  box-shadow: 5px 10px 18px #888888, -5px -5px 18px #888888;
+  box-shadow: 3px 10px 10px #888888, -3px -5px 10px #888888;
+}
+.modal-container .modal-overlay h2 {
+  font-weight: normal;
+  padding-bottom: 15px;
+  color: rgb(23, 43, 77);
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  padding: 5px 4px;
+  margin-bottom: 10px;
 }
-.modal-header h2 {
-  font-size: 1.4rem;
-  flex: 1;
-  text-align: center;
-  padding-left: 1rem;
+.modal-header .btn {
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.modal-body {
+  padding: 10px 0;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-items: space-between;
+  gap: 25px;
+  color: rgb(94, 108, 132);
+}
+.modal-body input {
+  padding: 10px 9px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+}
+.modal-body input:hover {
+  background-color: rgb(235, 236, 240);
+  border: none;
+}
+.modal-body input:focus {
+  outline: none;
+  border: 2px solid #2684ff;
+  background-color: #fff;
+}
+.modal-body .left {
+  padding: 4px;
+  width: 70%;
+}
+.modal-body .left .summary-input input::placeholder {
+  color: rgb(23, 43, 77);
+}
+.modal-body .left .comments {
+  margin-top: 20px;
+  color: rgb(23, 43, 77);
+  font-size: 15px;
+  padding: 0 9px;
+}
+.modal-body .left .comments span {
+  display: block;
+  margin-bottom: 10px;
+}
+.modal-body .left .comments input {
+  padding: 5px 5px;
+  border: 1px solid rgb(223, 225, 230);
+  background-color: #fff;
+  font-size: 14px;
+}
+.modal-body .left .comments input::placeholder {
+  font-size: 13px;
+}
+.modal-body .right {
+  padding: 4px;
+}
+.modal-body .right label {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12.5px;
+  padding: 3px 0;
+}
+.modal-body .right .select {
+  margin-top: 8px;
 }
 
 .sidebar {
@@ -286,6 +265,35 @@ button:hover,
 }
 .sidebar .list-items li {
   margin-bottom: 14px;
+}
+
+.issue-wrapper {
+  background: rgb(244, 245, 247);
+  width: 300px;
+  min-height: 400px;
+  border-radius: 3px;
+  padding: 10px 10px 0 10px;
+  color: rgb(94, 108, 132);
+}
+.issue-wrapper h4 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.issue-card {
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 3px;
+}
+.issue-card:hover {
+  background: rgb(235, 236, 240);
+}
+.issue-card p {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 5px;
+  line-height: 1.4;
 }
 
 .app-container {

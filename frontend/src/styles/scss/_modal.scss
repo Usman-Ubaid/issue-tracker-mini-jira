@@ -30,9 +30,93 @@
 }
 
 .modal-header {
-  h2 {
-    font-weight: normal;
-    padding-bottom: 15px;
-    color: rgb(23, 43, 77);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 4px;
+  margin-bottom: 10px;
+
+  .btn {
+    margin-left: 8px;
+    font-size: 12px;
+  }
+}
+
+.modal-body {
+  padding: 10px 0;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-items: space-between;
+  gap: 25px;
+  color: rgb(94, 108, 132);
+
+  input {
+    padding: 10px 9px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+
+    &:hover {
+      background-color: rgb(235, 236, 240);
+      border: none;
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid #2684ff;
+      background-color: #fff;
+    }
+  }
+
+  .left {
+    padding: 4px;
+    width: 70%;
+    .summary-input {
+      input {
+        &::placeholder {
+          color: rgb(23, 43, 77);
+        }
+      }
+    }
+    .comments {
+      margin-top: 20px;
+      color: rgb(23, 43, 77);
+      font-size: 15px;
+      padding: 0 9px;
+
+      span {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input {
+        padding: 5px 5px;
+        border: 1px solid rgb(223, 225, 230);
+        background-color: #fff;
+        font-size: 14px;
+
+        &::placeholder {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .right {
+    padding: 4px;
+
+    label {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12.5px;
+      padding: 3px 0;
+    }
+
+    .select {
+      margin-top: 8px;
+    }
   }
 }

@@ -1,0 +1,33 @@
+@import "./colors";
+
+.issue-wrapper {
+  background: rgb(244, 245, 247);
+  width: 300px;
+  min-height: 400px;
+  border-radius: 3px;
+  padding: 10px 10px 0 10px;
+  color: rgb(94, 108, 132);
+
+  h4 {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+}
+
+.issue-card {
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border-radius: 3px;
+
+  &:hover {
+    background: rgb(235, 236, 240);
+  }
+
+  p {
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+}

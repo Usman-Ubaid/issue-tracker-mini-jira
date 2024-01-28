@@ -1,9 +1,10 @@
 @import "./global";
 @import "./header";
 @import "./form";
-@import "./dashboard";
+@import "./board";
 @import "./modal";
 @import "./sidebar";
+@import "./issueCard";
 
 .app-container {
   display: grid;
