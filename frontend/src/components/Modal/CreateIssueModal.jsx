@@ -26,7 +26,8 @@ const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
   const onSubmit = async (formData) => {
     await postData(formData);
     const fetchedData = await fetchData();
-    setData(fetchedData.data);
+    // append formdata
+    setData((prevValue) => [...prevValue, formData]);
     reset({ issueSummary: "", issueType: {} });
     closeModal();
   };

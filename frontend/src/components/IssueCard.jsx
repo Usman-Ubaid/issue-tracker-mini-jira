@@ -1,11 +1,11 @@
 import Issues from "./Issues";
 
-const IssueCard = ({ heading }) => {
+const IssueCard = ({ heading, data }) => {
   return (
     <div className="issue-wrapper">
       <h4>{heading}</h4>
       <div>
-        <Issues />
+        <Issues data={data} />
       </div>
     </div>
   );

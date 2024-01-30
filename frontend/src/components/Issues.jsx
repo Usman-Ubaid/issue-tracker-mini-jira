@@ -1,7 +1,7 @@
 import { useState } from "react";
 import IssueModal from "./Modal/IssueModal";
 
-const Issues = () => {
+const Issues = ({ data }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
@@ -14,16 +14,18 @@ const Issues = () => {
   };
 
   return (
-    <div className="issue-card" onClick={openModal}>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia odit
-        asperiores adipisci obcaecati eius aspernatur cum sapiente laborum
-        architecto hic?
-      </p>
-      <span>Task</span>
+    <>
+      {data &&
+        data.map((item) => (
+          <div key={item._id} className="issue-card" onClick={openModal}>
+            <p>{item.title}</p>
+            <span>{item.issueType}</span>
+          </div>
+        ))}
+      {!data && <div>No Issues</div>}
 
       <IssueModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
-    </div>
+    </>
   );
 };
 
