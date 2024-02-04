@@ -1,6 +1,7 @@
+import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import KanbanBoard from "../../pages/KanbanBoard";
-import { useNavigate, useParams } from "react-router-dom";
+import { deleteIssue } from "../../services/api";
 
 const issueStatus = [
   { value: "ToDo", label: "ToDo" },
@@ -23,6 +24,11 @@ const IssueModal = () => {
     navigate("/");
   };
 
+  const handleDeleteIssue = async () => {
+    const res = await deleteIssue(id);
+    console.log(res.message);
+  };
+
   return (
     <div>
       <KanbanBoard />
@@ -31,7 +37,9 @@ const IssueModal = () => {
           <div className="modal-header">
             <Select id="issueType" options={issueType} required />
             <div>
-              <button className="btn">Delete</button>
+              <button className="btn" onClick={handleDeleteIssue}>
+                Delete
+              </button>
               <button className="btn" onClick={closeIssue}>
                 Cancel
               </button>
