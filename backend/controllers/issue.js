@@ -1,11 +1,11 @@
 import { createIssue } from "./helpers/createIssue.js";
 import Issue from "../models/Issue.js";
 
-let issues = [];
+const validIssueTypes = ["Epic", "Story", "Task"];
 
-/********************** GET ISSUE *********************/
+/********************** GET ALL ISSUE *********************/
 
-const getIssues = async (req, res) => {
+const getAllIssues = async (req, res) => {
   try {
     const allIssues = await Issue.find();
     return res
@@ -60,6 +60,32 @@ const updateIssue = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({ message: error });
+  }
+};
+
+/********************** UPDATE ISSUE TYPE *********************/
+
+const updateIssueType = async (req, res) => {
+  const id = req.params.id;
+  const { issueType } = req.body;
+
+  if (!validIssueTypes.includes(issueType)) {
+    return res.status(400).json({ message: "Invalid issueType" });
+  }
+  const issue = await Issue.findById(id);
+
+  try {
+    if (issue) {
+      issue.issueType = issueType;
+      await issue.save();
+      return res.status(200).json({ message: "Issue Updated" });
+    } else {
+      return res.status(400).json({ message: "Issue not Found" });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
   }
 };
 
@@ -126,4 +152,11 @@ const addChild = async (req, res) => {
   }
 };
 
-export { getIssues, addIssue, deleteIssue, updateIssue, addChild };
+export {
+  getAllIssues,
+  addIssue,
+  deleteIssue,
+  updateIssue,
+  updateIssueType,
+  addChild,
+};
