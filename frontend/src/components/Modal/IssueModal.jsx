@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
 import KanbanBoard from "../../pages/KanbanBoard";
 import { deleteIssue } from "../../services/api";
+import { useData } from "../../hooks/DataContext";
 
 const issueStatus = [
   { value: "ToDo", label: "ToDo" },
@@ -16,9 +17,9 @@ const issueType = [
 ];
 
 const IssueModal = () => {
+  const { setData } = useData();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
 
   const closeIssue = () => {
     navigate("/");
@@ -26,7 +27,16 @@ const IssueModal = () => {
 
   const handleDeleteIssue = async () => {
     const res = await deleteIssue(id);
-    console.log(res.message);
+    if (res) {
+      setData((prevData) => {
+        const updatedData = prevData.filter((issue) => issue._id !== id);
+        return updatedData;
+      });
+      console.log("Issue removed");
+      navigate("/");
+    } else {
+      console.log("Failed to delete the issue");
+    }
   };
 
   return (
