@@ -1,7 +1,6 @@
-import Modal from "react-modal";
 import Select from "react-select";
-
-Modal.setAppElement("#root");
+import KanbanBoard from "../../pages/KanbanBoard";
+import { useNavigate, useParams } from "react-router-dom";
 
 const issueStatus = [
   { value: "ToDo", label: "ToDo" },
@@ -15,61 +14,68 @@ const issueType = [
   { value: "Task", label: "Task" },
 ];
 
-const IssueModal = ({ modalIsOpen, closeModal }) => {
+const IssueModal = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
+
+  const closeIssue = () => {
+    navigate("/");
+  };
+
   return (
-    <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      className="modal-container"
-    >
-      <div className="modal-overlay">
-        <div className="modal-header">
-          <Select id="issueType" options={issueType} required />
-          <div>
-            <button className="btn">Delete</button>
-            <button className="btn" onClick={closeModal}>
-              Cancel
-            </button>
-          </div>
-        </div>
-        <div className="modal-body">
-          <div className="left">
-            <div className="summary-input">
-              <input
-                type="text"
-                name="summary"
-                id="summary"
-                placeholder="Summary"
-              />
+    <div>
+      <KanbanBoard />
+      <div className="modal-container">
+        <div className="modal-overlay">
+          <div className="modal-header">
+            <Select id="issueType" options={issueType} required />
+            <div>
+              <button className="btn">Delete</button>
+              <button className="btn" onClick={closeIssue}>
+                Cancel
+              </button>
             </div>
-            <div className="comments">
-              <span>Comments</span>
-              <div className="comment">
+          </div>
+          <div className="modal-body">
+            <div className="left">
+              <div className="summary-input">
                 <input
                   type="text"
-                  name="comment"
-                  id="comment"
-                  placeholder="Add a comment..."
+                  name="summary"
+                  id="summary"
+                  placeholder="Summary"
                 />
               </div>
+              <div className="comments">
+                <span>Comments</span>
+                <div className="comment">
+                  <input
+                    type="text"
+                    name="comment"
+                    id="comment"
+                    placeholder="Add a comment..."
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="right">
-            <div>
-              <label htmlFor="issueStatus">Status</label>
-              <div className="select">
-                <Select
-                  id="issueStatus"
-                  name="issueStatus"
-                  options={issueStatus}
-                  required
-                />
+            <div className="right">
+              <div>
+                <label htmlFor="issueStatus">Status</label>
+                <div className="select">
+                  <Select
+                    id="issueStatus"
+                    name="issueStatus"
+                    options={issueStatus}
+                    required
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 };
 
