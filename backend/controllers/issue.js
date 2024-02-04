@@ -3,6 +3,7 @@ import Issue from "../models/Issue.js";
 import { isValidObjectId } from "mongoose";
 
 const validIssueTypes = ["Epic", "Story", "Task"];
+const validIssueStates = ["ToDo", "InProgress", "Done"];
 
 /********************** GET ALL ISSUE *********************/
 
@@ -86,7 +87,7 @@ const updateIssueType = async (req, res) => {
 
     issue.issueType = issueType;
     await issue.save();
-    return res.status(200).json({ message: "Issue Updated" });
+    return res.status(200).json({ message: "Issue Type Updated" });
   } catch (error) {
     return res.status(500).json({ message: "Server Error", error });
   }
@@ -115,7 +116,42 @@ const updateIssueTitle = async (req, res) => {
 
     issue.title = issueTitle;
     await issue.save();
-    return res.status(200).json({ message: "Issue Updated" });
+    return res.status(200).json({ message: "Issue Title Updated" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
+};
+
+/********************** UPDATE ISSUE STATE *********************/
+
+const updateIssueState = async (req, res) => {
+  const id = req.params.id;
+  const { issueState } = req.body;
+
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid id" });
+  }
+
+  if (!issueState) {
+    return res.status(400).json({ message: "Issue State is required" });
+  }
+
+  if (!validIssueStates.includes(issueState)) {
+    return res.status(400).json({ message: "Invalid issue state" });
+  }
+
+  const issue = await Issue.findById(id);
+
+  try {
+    if (!issue) {
+      return res.status(400).json({ message: "Issue not Found" });
+    }
+
+    issue.state = issueState;
+    await issue.save();
+    return res.status(200).json({ message: "Issue State Updated" });
   } catch (error) {
     return res
       .status(500)
@@ -195,5 +231,6 @@ export {
   updateIssue,
   updateIssueType,
   updateIssueTitle,
+  updateIssueState,
   addChild,
 };
