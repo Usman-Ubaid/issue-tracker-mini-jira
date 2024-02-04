@@ -1,30 +1,26 @@
-import { useState } from "react";
-import IssueModal from "./Modal/IssueModal";
+import { useNavigate } from "react-router-dom";
 
 const Issues = ({ data }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = (e) => {
-    setModalIsOpen(false);
-    e.stopPropagation();
+  const openIssueModal = (id) => {
+    navigate(`/issue/${id}`);
   };
 
   return (
     <>
       {data &&
         data.map((item) => (
-          <div key={item._id} className="issue-card" onClick={openModal}>
+          <div
+            key={item._id}
+            className="issue-card"
+            onClick={() => openIssueModal(item._id)}
+          >
             <p>{item.title}</p>
             <span>{item.issueType}</span>
           </div>
         ))}
       {!data && <div>No Issues</div>}
-
-      <IssueModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
     </>
   );
 };
