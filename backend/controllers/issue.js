@@ -92,6 +92,37 @@ const updateIssueType = async (req, res) => {
   }
 };
 
+/********************** UPDATE ISSUE TITLE *********************/
+
+const updateIssueTitle = async (req, res) => {
+  const id = req.params.id;
+  const { issueTitle } = req.body;
+
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid id" });
+  }
+
+  if (!issueTitle) {
+    return res.status(400).json({ message: "Title is required" });
+  }
+
+  const issue = await Issue.findById(id);
+
+  try {
+    if (!issue) {
+      return res.status(400).json({ message: "Issue not Found" });
+    }
+
+    issue.title = issueTitle;
+    await issue.save();
+    return res.status(200).json({ message: "Issue Updated" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
+  }
+};
+
 /********************** DELETE ISSUE *********************/
 
 const deleteIssue = async (req, res) => {
@@ -111,6 +142,8 @@ const deleteIssue = async (req, res) => {
     return res.status(500).json({ message: error });
   }
 };
+
+/********************** ADD CHILD ISSUE *********************/
 
 const addChild = async (req, res) => {
   const parentId = req.params.id;
