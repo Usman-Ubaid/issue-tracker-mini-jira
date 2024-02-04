@@ -1,5 +1,6 @@
 import { createIssue } from "./helpers/createIssue.js";
 import Issue from "../models/Issue.js";
+import { isValidObjectId } from "mongoose";
 
 const validIssueTypes = ["Epic", "Story", "Task"];
 
@@ -69,23 +70,25 @@ const updateIssueType = async (req, res) => {
   const id = req.params.id;
   const { issueType } = req.body;
 
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid id" });
+  }
+
   if (!validIssueTypes.includes(issueType)) {
     return res.status(400).json({ message: "Invalid issueType" });
   }
-  const issue = await Issue.findById(id);
 
   try {
-    if (issue) {
-      issue.issueType = issueType;
-      await issue.save();
-      return res.status(200).json({ message: "Issue Updated" });
-    } else {
+    const issue = await Issue.findById(id);
+    if (!issue) {
       return res.status(400).json({ message: "Issue not Found" });
     }
+
+    issue.issueType = issueType;
+    await issue.save();
+    return res.status(200).json({ message: "Issue Updated" });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server Error", error: error.message });
+    return res.status(500).json({ message: "Server Error", error });
   }
 };
 
@@ -158,5 +161,6 @@ export {
   deleteIssue,
   updateIssue,
   updateIssueType,
+  updateIssueTitle,
   addChild,
 };
