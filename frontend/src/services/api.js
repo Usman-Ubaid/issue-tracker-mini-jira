@@ -96,3 +96,22 @@ export const addChildIssue = async (id, childId) => {
     console.log("Error", error);
   }
 };
+
+export const updateIssueType = async (id, issueType) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5001/api/issues/issueType/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ issueType }),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!response.ok) {
+      console.log("Failed to update issue type");
+    }
+    return response.json();
+  } catch (error) {
+    console.log("Error", error.message);
+  }
+};

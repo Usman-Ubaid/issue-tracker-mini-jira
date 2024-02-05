@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import KanbanBoard from "../../pages/KanbanBoard";
-import { deleteIssue } from "../../services/api";
+import { deleteIssue, updateIssueType } from "../../services/api";
 import { useData } from "../../hooks/DataContext";
 
 const issueStatus = [
@@ -17,6 +18,7 @@ const issueType = [
 ];
 
 const IssueModal = () => {
+  const { control } = useForm();
   const { setData } = useData();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -39,19 +41,42 @@ const IssueModal = () => {
     }
   };
 
+  const handleIssueTypeChange = async (selectedOption) => {
+    const res = await updateIssueType(id, selectedOption.value);
+    console.log(res.message);
+    setData((prevData) => {
+      const updatedData = prevData.map((issue) =>
+        issue._id === id ? { ...issue, issueType: selectedOption.value } : issue
+      );
+      return updatedData;
+    });
+  };
+
   return (
     <div>
       <KanbanBoard />
       <div className="modal-container">
         <div className="modal-overlay">
           <div className="modal-header">
-            <Select id="issueType" options={issueType} required />
+            <Controller
+              name="issueType"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  id="issueType"
+                  name="issueType"
+                  options={issueType}
+                  onChange={handleIssueTypeChange}
+                  required
+                />
+              )}
+            />
             <div>
               <button className="btn" onClick={handleDeleteIssue}>
                 Delete
               </button>
               <button className="btn" onClick={closeIssue}>
-                Cancel
+                Close
               </button>
             </div>
           </div>
