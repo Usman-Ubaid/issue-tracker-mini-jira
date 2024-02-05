@@ -20,6 +20,28 @@ const getAllIssues = async (req, res) => {
   }
 };
 
+/********************** GET ALL ISSUE *********************/
+
+const getIssueById = async (req, res) => {
+  const id = req.params.id;
+
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid id" });
+  }
+
+  const issue = await Issue.findById(id);
+  try {
+    if (!issue) {
+      return res.status(400).json({ message: "Issue not Found" });
+    }
+    return res.status(400).json({ message: "success", issue });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error fetching data", error: error.message });
+  }
+};
+
 /********************** ADD ISSUE *********************/
 
 const addIssue = async (req, res) => {
@@ -226,6 +248,7 @@ const addChild = async (req, res) => {
 
 export {
   getAllIssues,
+  getIssueById,
   addIssue,
   deleteIssue,
   updateIssue,

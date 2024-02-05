@@ -3,6 +3,7 @@ import express from "express";
 import {
   addIssue,
   getAllIssues,
+  getIssueById,
   deleteIssue,
   updateIssue,
   addChild,
@@ -14,6 +15,7 @@ import {
 const router = express.Router();
 
 router.get("/issues", getAllIssues);
+router.get("/issues/:id", getIssueById);
 router.post("/issues", addIssue);
 router.put("/issues/:id", updateIssue);
 router.put("/issues/issueType/:id", updateIssueType);
