@@ -1,11 +1,28 @@
-import Issues from "./Issues";
+import { useNavigate } from "react-router-dom";
 
-const IssueCard = ({ heading, data }) => {
+const IssueCard = ({ heading, issues }) => {
+  const navigate = useNavigate();
+
+  const openIssueModal = (id) => {
+    navigate(`/issue/${id}`);
+  };
+
   return (
     <div className="issue-wrapper">
       <h4>{heading}</h4>
       <div>
-        <Issues data={data} />
+        {issues &&
+          issues.length &&
+          issues.map((issue) => (
+            <div
+              key={issue._id}
+              className="issue-card"
+              onClick={() => openIssueModal(issue._id)}
+            >
+              <p>{issue.title}</p>
+              <span>{issue.issueType}</span>
+            </div>
+          ))}
       </div>
     </div>
   );
