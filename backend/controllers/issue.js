@@ -1,6 +1,6 @@
 import { createIssue } from "./helpers/createIssue.js";
 import Issue from "../models/Issue.js";
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 
 const validIssueTypes = ["Epic", "Story", "Task"];
 const validIssueStates = ["ToDo", "InProgress", "Done"];
@@ -25,6 +25,8 @@ const getAllIssues = async (req, res) => {
 const getIssueById = async (req, res) => {
   const id = req.params.id;
 
+  const objectId = new mongoose.Types.ObjectId(id);
+
   if (!isValidObjectId(id)) {
     return res.status(400).json({ message: "Invalid id" });
   }
@@ -34,7 +36,7 @@ const getIssueById = async (req, res) => {
     if (!issue) {
       return res.status(400).json({ message: "Issue not Found" });
     }
-    return res.status(400).json({ message: "success", issue });
+    return res.status(200).json({ message: "success", issue });
   } catch (error) {
     return res
       .status(500)

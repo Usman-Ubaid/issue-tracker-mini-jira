@@ -15,7 +15,7 @@ import {
 const router = express.Router();
 
 router.get("/issues", getAllIssues);
-router.get("/issues/:id", getIssueById);
+router.get("/issues/issue/:id", getIssueById);
 router.post("/issues", addIssue);
 router.put("/issues/:id", updateIssue);
 router.put("/issues/issueType/:id", updateIssueType);
