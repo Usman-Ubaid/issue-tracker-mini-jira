@@ -4,32 +4,25 @@ import { fetchData } from "../services/api";
 const DataContext = createContext(undefined);
 
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState([]);
-  const [groupedData, setGroupedData] = useState({});
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const fetchedData = await fetchData();
-        setData(fetchedData.data);
+    fetchData()
+      .then((res) => setData(res?.data))
+      .catch((error) => {
+        console.log("Error fetching the data", error);
+      });
+  }, []);
 
-        const updatedGroupedData = fetchedData.data.reduce((acc, item) => {
-          const state = item.state;
-          acc[state] = acc[state] || [];
-          acc[state].push(item);
-          return acc;
-        }, {});
-
-        setGroupedData(updatedGroupedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, [data.length]);
+  const addIssue = (newIssue) => {
+    setData((prevData) => ({
+      ...prevData,
+      newIssue,
+    }));
+  };
 
   return (
-    <DataContext.Provider value={{ data, setData, groupedData }}>
+    <DataContext.Provider value={{ data, addIssue }}>
       {children}
     </DataContext.Provider>
   );
