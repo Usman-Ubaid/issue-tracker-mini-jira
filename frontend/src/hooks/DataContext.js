@@ -4,7 +4,7 @@ import { fetchData } from "../services/api";
 const DataContext = createContext(undefined);
 
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetchData()
@@ -12,17 +12,20 @@ export const DataProvider = ({ children }) => {
       .catch((error) => {
         console.log("Error fetching the data", error);
       });
-  }, []);
+  }, [data.length]);
 
   const addIssue = (newIssue) => {
-    setData((prevData) => ({
-      ...prevData,
-      newIssue,
-    }));
+    const newData = [...data, newIssue];
+    setData(newData);
+  };
+
+  const deleteIssue = (id) => {
+    const filteredData = data?.filter((issue) => issue._id !== id);
+    setData(filteredData);
   };
 
   return (
-    <DataContext.Provider value={{ data, addIssue }}>
+    <DataContext.Provider value={{ data, addIssue, deleteIssue }}>
       {children}
     </DataContext.Provider>
   );
