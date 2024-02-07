@@ -143,3 +143,19 @@ export const updateIssueTitle = async (id, issueTitle) => {
     console.log("Error", error.message);
   }
 };
+
+export const updateIssueState = async (id, issueState) => {
+  try {
+    const response = await fetch(`${BASE_URL}/issueStatus/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ issueState }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      console.log("Failed to update issue state");
+    }
+    return response.json();
+  } catch (error) {
+    console.log("Error", error.message);
+  }
+};

@@ -5,6 +5,7 @@ import {
   updateIssueTitle,
   updateIssueType,
   deleteIssueApi,
+  updateIssueState,
 } from "../services/api";
 
 const DataContext = createContext(undefined);
@@ -80,9 +81,34 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const issueStatusChange = async (id, issueStatus) => {
+    const res = await updateIssueState(id, issueStatus);
+
+    if (res) {
+      const updatedIssues = data.map((issue) => {
+        if (issue._id === id) {
+          return { ...issue, state: issueStatus };
+        }
+        return issue;
+      });
+
+      setData(updatedIssues);
+      console.log("Issue state updated");
+    } else {
+      console.log("Failed to update state");
+    }
+  };
+
   return (
     <DataContext.Provider
-      value={{ data, deleteIssue, addIssue, issueTypeChange, issueTitleChange }}
+      value={{
+        data,
+        deleteIssue,
+        addIssue,
+        issueTypeChange,
+        issueTitleChange,
+        issueStatusChange,
+      }}
     >
       {children}
     </DataContext.Provider>
