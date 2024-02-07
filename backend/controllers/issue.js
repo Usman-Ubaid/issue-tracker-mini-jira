@@ -57,7 +57,7 @@ const addIssue = async (req, res) => {
     const issue = await new Issue(newIssue).save();
     return res.status(201).json({
       message: "success",
-      data: { id: issue._id },
+      data: { issue },
     });
   } catch (error) {
     return res.status(400).json({ message: error });
