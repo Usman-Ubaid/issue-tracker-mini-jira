@@ -1,4 +1,4 @@
-import Layout from "../components/CommonComponents/Layout";
+import Layout from "../components/common/Layout";
 import { useData } from "../hooks/DataContext";
 import IssueCard from "../components/IssueCard";
 

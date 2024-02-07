@@ -13,7 +13,7 @@ const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
     },
   });
 
-  const { setData } = useData();
+  const { addIssue, data } = useData();
 
   Modal.setAppElement("#root");
 
@@ -25,13 +25,10 @@ const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
 
   const onSubmit = async (formData) => {
     await postData(formData);
-    const fetchedData = await fetchData();
-    // append formdata
-    setData((prevValue) => [...prevValue, formData]);
+    addIssue(formData);
     reset({ issueSummary: "", issueType: {} });
     closeModal();
   };
-
   return (
     <Modal
       isOpen={modalIsOpen}

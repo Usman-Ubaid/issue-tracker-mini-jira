@@ -1,8 +1,8 @@
 const ModalHeader = ({ heading, closeModal }) => {
   return (
-    <div className="modal-header">
+    <div>
       <h2>{heading}</h2>
-      <button onClick={closeModal}>X</button>
+      {/* <button onClick={closeModal}>X</button> */}
     </div>
   );
 };

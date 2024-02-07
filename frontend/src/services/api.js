@@ -20,6 +20,20 @@ export const fetchData = async () => {
   }
 };
 
+export const getIssueById = async (id) => {
+  try {
+    const response = await fetch(`${BASE_URL}/issue/${id}`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("Error fetching Data:", error);
+  }
+};
+
 export const postData = async (formData) => {
   const { issueSummary, issueType } = formData;
   try {
@@ -44,7 +58,7 @@ export const postData = async (formData) => {
   }
 };
 
-export const deleteIssue = async (id) => {
+export const deleteIssueApi = async (id) => {
   try {
     const response = await fetch(`${BASE_URL}/${id}`, {
       method: "delete",
@@ -99,14 +113,11 @@ export const addChildIssue = async (id, childId) => {
 
 export const updateIssueType = async (id, issueType) => {
   try {
-    const response = await fetch(
-      `http://localhost:5001/api/issues/issueType/${id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ issueType }),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await fetch(`${BASE_URL}/issueType/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ issueType }),
+      headers: { "Content-Type": "application/json" },
+    });
     if (!response.ok) {
       console.log("Failed to update issue type");
     }
