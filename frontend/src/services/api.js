@@ -50,8 +50,9 @@ export const postData = async (formData) => {
 
     if (!response.ok) {
       console.log("Failed to post data");
+      return;
     } else {
-      console.log("Your Issue has been successfully added.");
+      return await response.json();
     }
   } catch (error) {
     console.log("Error posting data:", error);
@@ -116,6 +117,22 @@ export const updateIssueType = async (id, issueType) => {
     const response = await fetch(`${BASE_URL}/issueType/${id}`, {
       method: "PUT",
       body: JSON.stringify({ issueType }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      console.log("Failed to update issue type");
+    }
+    return response.json();
+  } catch (error) {
+    console.log("Error", error.message);
+  }
+};
+
+export const updateIssueTitle = async (id, issueTitle) => {
+  try {
+    const response = await fetch(`${BASE_URL}/issueTitle/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ issueTitle }),
       headers: { "Content-Type": "application/json" },
     });
     if (!response.ok) {
