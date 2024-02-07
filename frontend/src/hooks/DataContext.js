@@ -15,8 +15,7 @@ export const DataProvider = ({ children }) => {
   }, [data.length]);
 
   const addIssue = (newIssue) => {
-    const newData = [...data, newIssue];
-    setData(newData);
+    setData((prevData) => [...prevData, newIssue]);
   };
 
   const deleteIssue = (id) => {
@@ -24,8 +23,21 @@ export const DataProvider = ({ children }) => {
     setData(filteredData);
   };
 
+  const issueTypeChange = (id, issueType) => {
+    const updatedIssues = data.map((issue) => {
+      if (issue._id === id) {
+        return { ...issue, issueType: issueType };
+      }
+      return issue;
+    });
+
+    setData(updatedIssues);
+  };
+
   return (
-    <DataContext.Provider value={{ data, addIssue, deleteIssue }}>
+    <DataContext.Provider
+      value={{ data, deleteIssue, addIssue, issueTypeChange }}
+    >
       {children}
     </DataContext.Provider>
   );

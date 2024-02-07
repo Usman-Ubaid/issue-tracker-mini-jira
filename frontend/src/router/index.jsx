@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import KanbanBoard from "../pages/KanbanBoard";
-import IssueModal from "../components/Modal/IssueModal";
+import IssueModal from "../pages/IssueModal";
 
 const ReactRouter = () => {
   return (

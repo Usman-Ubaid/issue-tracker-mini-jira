@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CreateIssueModal from "../Modal/CreateIssueModal";
+import CreateIssueModal from "../Modal/CreateIssue";
 
 const Header = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

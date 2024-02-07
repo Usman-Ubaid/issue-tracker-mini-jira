@@ -2,13 +2,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { useState, useEffect } from "react";
-import KanbanBoard from "../../pages/KanbanBoard";
-import {
-  deleteIssueApi,
-  updateIssueType,
-  getIssueById,
-} from "../../services/api";
-import { useData } from "../../hooks/DataContext";
+import KanbanBoard from "./KanbanBoard";
+import { deleteIssueApi, updateIssueType, getIssueById } from "../services/api";
+import { useData } from "../hooks/DataContext";
 
 const IssueModal = () => {
   const [selectedIssue, setSelectedIssue] = useState({
@@ -19,7 +15,7 @@ const IssueModal = () => {
   });
 
   const { control } = useForm();
-  const { data, deleteIssue } = useData();
+  const { data, deleteIssue, issueTypeChange } = useData();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -58,23 +54,17 @@ const IssueModal = () => {
     }
   };
 
-  const handleIssueTypeChangeApi = async (selectedOption) => {
+  const handleIssueTypeChange = async (selectedOption) => {
     const res = await updateIssueType(id, selectedOption.value);
-    console.log(res.message);
 
-    const updatedIssues = data.map((issue) => {
-      if (issue._id === id) {
-        return { ...issue, issueType: selectedOption.value };
-      }
-      return issue;
-    });
     if (res) {
-      // setData(updatedIssues);
+      issueTypeChange(id, selectedOption.value);
 
       setSelectedIssue((prevValue) => ({
         ...prevValue,
         issueType: selectedOption.value,
       }));
+      console.log(res.message);
     } else {
       console.log("Failed to update issue type");
     }
@@ -98,7 +88,7 @@ const IssueModal = () => {
                     (option) =>
                       option.value === (selectedIssue?.issueType || "")
                   )}
-                  onChange={(option) => handleIssueTypeChangeApi(option)}
+                  onChange={(option) => handleIssueTypeChange(option)}
                   required
                 />
               )}
