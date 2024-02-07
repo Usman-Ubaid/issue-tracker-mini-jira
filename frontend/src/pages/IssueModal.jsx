@@ -15,7 +15,7 @@ const IssueModal = () => {
   });
 
   const { control } = useForm();
-  const { data, deleteIssue, issueTypeChange } = useData();
+  const { deleteIssue, issueTypeChange, issueTitleChange } = useData();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -70,6 +70,18 @@ const IssueModal = () => {
     }
   };
 
+  const handleTitleChange = async (e) => {
+    const newTitle = e.target.value;
+    setSelectedIssue((prevValue) => ({
+      ...prevValue,
+      title: newTitle,
+    }));
+  };
+
+  const handleTitleChangeApi = () => {
+    issueTitleChange(id, selectedIssue.title);
+  };
+
   return (
     <div>
       <KanbanBoard />
@@ -102,7 +114,7 @@ const IssueModal = () => {
               </button>
             </div>
           </div>
-          {/* <div className="modal-body">
+          <div className="modal-body">
             <div className="left">
               <div className="summary-input">
                 <input
@@ -111,9 +123,11 @@ const IssueModal = () => {
                   id="issueSummary"
                   placeholder="Summary"
                   value={selectedIssue?.title}
+                  onChange={handleTitleChange}
+                  onBlur={handleTitleChangeApi}
                 />
               </div>
-              <div className="comments">
+              {/* <div className="comments">
                 <span>Comments</span>
                 <div className="comment">
                   <input
@@ -123,9 +137,9 @@ const IssueModal = () => {
                     placeholder="Add a comment..."
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
-            <div className="right">
+            {/* <div className="right">
               <div>
                 <label htmlFor="issueState">Status</label>
                 <div className="select">
@@ -137,8 +151,8 @@ const IssueModal = () => {
                   />
                 </div>
               </div>
-            </div>
-          </div> */}
+            </div> */}
+          </div>
         </div>
       </div>
     </div>

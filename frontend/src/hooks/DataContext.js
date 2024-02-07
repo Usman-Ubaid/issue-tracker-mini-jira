@@ -1,5 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
-import { fetchData, postData } from "../services/api";
+import { fetchData, postData, updateIssueTitle } from "../services/api";
 
 const DataContext = createContext(undefined);
 
@@ -35,9 +35,26 @@ export const DataProvider = ({ children }) => {
     setData(updatedIssues);
   };
 
+  const issueTitleChange = async (id, issueTitle) => {
+    const res = await updateIssueTitle(id, issueTitle);
+
+    if (res) {
+      const updatedIssues = data.map((issue) => {
+        if (issue._id === id) {
+          return { ...issue, title: issueTitle };
+        }
+        return issue;
+      });
+
+      setData(updatedIssues);
+    } else {
+      console.log("Failed to update title");
+    }
+  };
+
   return (
     <DataContext.Provider
-      value={{ data, deleteIssue, addIssue, issueTypeChange }}
+      value={{ data, deleteIssue, addIssue, issueTypeChange, issueTitleChange }}
     >
       {children}
     </DataContext.Provider>
