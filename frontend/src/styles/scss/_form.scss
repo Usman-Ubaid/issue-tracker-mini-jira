@@ -42,60 +42,8 @@
       color: rgb(66, 82, 110);
 
       &:hover {
-        background-color: hsl(0, 0%, 90%)
+        background-color: hsl(0, 0%, 90%);
       }
     }
   }
 }
-
-// .add-issue-form {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-
-//   fieldset {
-//     border: none;
-
-//     legend {
-//       margin: 1rem auto;
-//     }
-//   }
-
-//   input {
-//     margin: 1rem 0;
-//     padding: 7px 10px;
-//     display: block;
-//     width: 300px;
-//     font-size: 1rem;
-//     border-radius: 3px;
-//     border: 1px solid #ccc;
-
-//     &:focus {
-//       outline: none;
-//       border: 1px solid black;
-//     }
-//   }
-
-//   select {
-//     margin: 1rem 0;
-//     display: block;
-//     padding: 7px 10px;
-//     width: 300px;
-//     font-size: 1rem;
-//     border: 1px solid #ccc;
-//     border-radius: 3px;
-
-//     &:focus {
-//       outline: none;
-//       border: 1px solid black;
-//     }
-//   }
-// }
-
-// .fieldset-container {
-//   display: flex;
-//   align-items: flex-start;
-//   justify-content: space-between;
-//   column-gap: 2rem;
-// }

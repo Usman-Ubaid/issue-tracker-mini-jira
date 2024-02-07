@@ -11,8 +11,7 @@ const IssueCard = ({ heading, issues }) => {
     <div className="issue-wrapper">
       <h4>{heading}</h4>
       <div>
-        {issues &&
-          issues.length &&
+        {issues && issues.length ? (
           issues.map((issue) => (
             <div
               key={issue._id}
@@ -22,7 +21,10 @@ const IssueCard = ({ heading, issues }) => {
               <p>{issue.title}</p>
               <span>{issue.issueType}</span>
             </div>
-          ))}
+          ))
+        ) : (
+          <p>No issues found</p>
+        )}
       </div>
     </div>
   );

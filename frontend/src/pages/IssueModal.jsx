@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { useState, useEffect } from "react";
 import KanbanBoard from "./KanbanBoard";
-import { deleteIssueApi, getIssueById } from "../services/api";
+import { getIssueById } from "../services/api";
 import { useData } from "../hooks/DataContext";
 
 const IssueModal = () => {
@@ -15,7 +15,8 @@ const IssueModal = () => {
   });
 
   const { control } = useForm();
-  const { deleteIssue, issueTypeChange, issueTitleChange } = useData();
+  const { deleteIssue, issueTypeChange, issueTitleChange, issueStatusChange } =
+    useData();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -57,7 +58,16 @@ const IssueModal = () => {
     }));
   };
 
-  const handleTitleChange = async (e) => {
+  const handleIssueStatusChange = async (selectedOption) => {
+    issueStatusChange(id, selectedOption.value);
+
+    setSelectedIssue((prevValue) => ({
+      ...prevValue,
+      state: selectedOption.value,
+    }));
+  };
+
+  const handleTitleChange = (e) => {
     const newTitle = e.target.value;
     setSelectedIssue((prevValue) => ({
       ...prevValue,
@@ -66,7 +76,11 @@ const IssueModal = () => {
   };
 
   const handleTitleChangeApi = () => {
-    issueTitleChange(id, selectedIssue.title);
+    if (selectedIssue.title !== "") {
+      issueTitleChange(id, selectedIssue.title);
+    } else {
+      console.log("Field is required");
+    }
   };
 
   return (
@@ -112,6 +126,7 @@ const IssueModal = () => {
                   value={selectedIssue?.title}
                   onChange={handleTitleChange}
                   onBlur={handleTitleChangeApi}
+                  required
                 />
               </div>
               {/* <div className="comments">
@@ -126,19 +141,29 @@ const IssueModal = () => {
                 </div>
               </div> */}
             </div>
-            {/* <div className="right">
-              <div>
+            <div className="right">
+              <div className="select">
                 <label htmlFor="issueState">Status</label>
-                <div className="select">
-                  <Select
-                    id="issueState"
-                    name="issueState"
-                    options={issueState}
-                    required
-                  />
-                </div>
+                <Controller
+                  name="issueState"
+                  control={control}
+                  rules={{ required: true }}
+                  render={() => (
+                    <Select
+                      id="issueState"
+                      name="issueState"
+                      options={issueState}
+                      value={issueState.find(
+                        (option) =>
+                          option.value === (selectedIssue?.state || "")
+                      )}
+                      onChange={(option) => handleIssueStatusChange(option)}
+                      required
+                    />
+                  )}
+                />
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

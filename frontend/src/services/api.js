@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-// export const BASE_URL = "https://issue-tracker-mini-jira.vercel.app/api/issues";
-export const BASE_URL = "http://localhost:5001/api/issues";
+export const BASE_URL = "https://issue-tracker-mini-jira.vercel.app/api/issues";
+// export const BASE_URL = "http://localhost:5001/api/issues";
 
 export const fetchData = async () => {
   try {
