@@ -1,9 +1,7 @@
 import Modal from "react-modal";
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
-import { postData } from "../../services/api";
 import { useData } from "../../hooks/DataContext";
-import { fetchData } from "../../services/api";
 
 const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
   const { control, handleSubmit, reset } = useForm({
@@ -13,7 +11,7 @@ const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
     },
   });
 
-  const { addIssue, data } = useData();
+  const { addIssue } = useData();
 
   Modal.setAppElement("#root");
 

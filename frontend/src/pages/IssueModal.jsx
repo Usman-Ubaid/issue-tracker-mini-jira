@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { useState, useEffect } from "react";
 import KanbanBoard from "./KanbanBoard";
-import { deleteIssueApi, updateIssueType, getIssueById } from "../services/api";
+import { deleteIssueApi, getIssueById } from "../services/api";
 import { useData } from "../hooks/DataContext";
 
 const IssueModal = () => {
@@ -44,30 +44,17 @@ const IssueModal = () => {
   }, [id]);
 
   const handleDeleteIssue = async () => {
-    const res = await deleteIssueApi(id);
-    if (res) {
-      deleteIssue(id);
-      console.log("Issue removed");
-      navigate("/");
-    } else {
-      console.log("Failed to delete the issue");
-    }
+    deleteIssue(id);
+    navigate("/");
   };
 
   const handleIssueTypeChange = async (selectedOption) => {
-    const res = await updateIssueType(id, selectedOption.value);
+    issueTypeChange(id, selectedOption.value);
 
-    if (res) {
-      issueTypeChange(id, selectedOption.value);
-
-      setSelectedIssue((prevValue) => ({
-        ...prevValue,
-        issueType: selectedOption.value,
-      }));
-      console.log(res.message);
-    } else {
-      console.log("Failed to update issue type");
-    }
+    setSelectedIssue((prevValue) => ({
+      ...prevValue,
+      issueType: selectedOption.value,
+    }));
   };
 
   const handleTitleChange = async (e) => {
