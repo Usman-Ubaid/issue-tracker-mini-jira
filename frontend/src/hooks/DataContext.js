@@ -1,5 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
-import { fetchData } from "../services/api";
+import { fetchData, postData } from "../services/api";
 
 const DataContext = createContext(undefined);
 
@@ -12,10 +12,11 @@ export const DataProvider = ({ children }) => {
       .catch((error) => {
         console.log("Error fetching the data", error);
       });
-  }, [data.length]);
+  }, []);
 
-  const addIssue = (newIssue) => {
-    setData((prevData) => [...prevData, newIssue]);
+  const addIssue = async (newIssue) => {
+    const res = await postData(newIssue);
+    setData([...data, res.data.issue]);
   };
 
   const deleteIssue = (id) => {

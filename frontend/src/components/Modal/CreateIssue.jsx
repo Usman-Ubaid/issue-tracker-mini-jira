@@ -24,7 +24,6 @@ const CreateIssueModal = ({ modalIsOpen, closeModal }) => {
   ];
 
   const onSubmit = async (formData) => {
-    await postData(formData);
     addIssue(formData);
     reset({ issueSummary: "", issueType: {} });
     closeModal();
